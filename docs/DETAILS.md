@@ -1,61 +1,72 @@
 # Calculation Details
 
-The calculator estimates taxes for fiscal years 2026&ndash;2029 using a four-year phase-in of your new assessed value. The yearly rate inputs are generated at runtime from arrays in the script, making it simple to adjust the assumptions. The defaults are:
+The calculator estimates taxes for fiscal years 2026\u20132029. By default it uses the council mill rates stored in the `defaultRates` object at the bottom of `Index.html`:
 
 ```javascript
-const years = [2026, 2027, 2028, 2029];
-const defaultCouncil = [35.64, 34.03, 32.11, 30.45];
-const defaultEqualized = [34.27, 31.88, 29.80, 27.97];
+const defaultRates = {
+  councilY1: 35.64,
+  councilY2: 34.03,
+  councilY3: 32.11,
+  councilY4: 30.45,
+  equalizedY1: 34.27,
+  equalizedY2: 31.88,
+  equalizedY3: 29.80,
+  equalizedY4: 27.97,
+  futureIncrease: 0.03
+};
 ```
 
-*(see `Index.html` lines 155&ndash;177)*.
+*(see `Index.html` lines 330\u2013341).* 
 
 ## Inputs
 
-- **Previous Assessed Value** – your assessment before the 2024 revaluation.
-- **Current Assessed Value** – your new assessment after revaluation.
-- **Pre-Reval Council Mill Rate** and **Equalized Rate** – mill rates prior to revaluation.
-- **Base Mill Rate (Pre-Reval)** – used to calculate your current tax.
-- **FY Rates** – council and equalized mill rates for each year of the phase-in.
-- **Future Budget Increase** – an optional percentage increase applied after FY 2027.
+- **Current Assessed Value** \u2013 your post-revaluation assessment.
+- **Old Assessed Value** \u2013 optional previous assessment before October 2024.
+- **Revaluation Increase (%)** \u2013 optional percentage used to infer your old value.
+- **Council Mill Rates** \u2013 FY 2026\u20132029 values, overridable in Advanced Configuration.
+- **Equalized Rates** \u2013 provided for reference; not used in calculations.
+- **Annual Budget Increase** \u2013 projected increase applied to FY 2028 and FY 2029.
+The Advanced Configuration panel is hidden when the page loads. Expand it if you need to supply your old value or override any of the default rates.
+
 
 ## Calculation Steps
 
-1. **Baseline Values**
-   - Convert assessed values to property value by dividing by 0.7.
-   - Compute the annual tax before revaluation:
+1. **Read Inputs**
 
-     ```javascript
-     const assessedMillPre = assessedPre / 1000;
-     const annualTaxPre = assessedMillPre * millRatePre;
-     ```
-     *(see `Index.html` lines 192&ndash;197)*.
-2. **Assessment Phase-In**
-   - The change in assessment is phased in over four years:
+   The script starts with the defaults from `defaultRates` and overrides them with any values entered in the Advanced Configuration panel.
 
-     ```javascript
-     const changeInAssessment = assessedPost - assessedPre;
-     const quarterPhase = changeInAssessment / 4;
-     const assessed = years.map((_, i) => assessedPre + quarterPhase * i);
-     ```
-     *(see `Index.html` lines 198&ndash;207)*.
-3. **Yearly Taxes**
-   - For each year, the script computes council tax and the increase relative to your pre-reval tax. Results are displayed in a table:
+2. **Determine Phase-In**
 
-     ```javascript
-     const council = assessedMill.map((mill, i) => mill * councilMill[i]);
-     const inc = council.map(val => val - annualTaxPre);
-     const mon = inc.map(val => val / 12);
-     ```
-     *(see `Index.html` lines 209&ndash;233)*.
+   If an old assessment (or revaluation percentage) is provided, the difference between the new and old values is phased in over four years:
 
-4. **Rendering Results**
-   - The calculator builds an HTML summary and inserts it into the `#results` element.
+```javascript
+const diff     = postVal - oldVal;
+const assessY1 = oldVal + 0.25 * diff;
+const assessY2 = oldVal + 0.50 * diff;
+const assessY3 = oldVal + 0.75 * diff;
+const assessY4 = postVal;
+```
+*(see `Index.html` lines 474\u2013490).* 
 
-     ```javascript
-     const resultsEl = document.getElementById('results');
-     resultsEl.innerHTML = html;
-     ```
-     *(see `Index.html` lines 234&ndash;291)*.
+3. **Compute Annual Taxes**
+
+   For each fiscal year the assessed value is divided by 1000 and multiplied by the council mill rate. FY 2028 and FY 2029 include the optional `futureIncrease`:
+
+```javascript
+const taxY1 = millY1 * councilY1;
+const taxY2 = millY2 * councilY2;
+const taxY3 = (millY3 * councilY3) * (1 + futureIncrease);
+const taxY4 = (millY4 * councilY4) * (1 + futureIncrease);
+```
+*(see `Index.html` lines 480\u2013489).* 
+
+4. **Render Output**
+
+   If an old assessment or percentage increase is supplied, the script renders the full phase-in table with year-over-year changes. Otherwise it shows a warning message asking for one of those values.
+
+```javascript
+resultsEl.innerHTML = html;
+```
+*(see `Index.html` lines 373\u2013436).* 
 
 These calculations provide an estimate only and may not match your actual tax bill.
