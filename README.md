@@ -2,7 +2,7 @@
 
 This repository contains a single-page calculator for estimating residential property taxes in the Town of Bloomfield for fiscal years 2026&ndash;2029. It is written entirely in HTML and JavaScript.
 
-The tool dynamically builds the yearly rate inputs from arrays in the script, so you can easily adjust the default mill rates without touching the markup.
+Default mill rates for each fiscal year are defined near the bottom of `Index.html` and used when calculating taxes. Open the **Advanced Configuration** panel (collapsed on load) if you need to override them or enter your old assessment or revaluation percentage.
 
 ## Getting Started
 
