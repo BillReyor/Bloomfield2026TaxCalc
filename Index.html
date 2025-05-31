@@ -14,7 +14,7 @@
     </h1>
 
     <p class="mb-8 text-gray-700 leading-relaxed">
-      Estimate your residential property taxes over the four-year phase-in after revaluation. Adjust the fields as needed based on your assessment notice.
+      Estimate your residential property taxes over the four-year phase-in after the 2024 revaluation. Adjust the fields as needed based on your assessment notice.
     </p>
 
     <div class="bg-white shadow-md rounded-lg p-6 mb-10">
@@ -22,7 +22,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label for="assessedPre" class="block font-medium mb-1">
-            Previous Assessed Value
+            Assessed Value Before 2024 Revaluation
           </label>
           <input
             type="number"
@@ -33,13 +33,13 @@
             value="178010"
           />
           <p id="assessedPreHelp" class="mt-1 text-sm text-gray-500">
-            Your property’s assessment before the 2024 revaluation.
+            The assessment amount your property had before the October 2024 revaluation.
           </p>
         </div>
 
         <div>
           <label for="assessedPost" class="block font-medium mb-1">
-            Current Assessed Value
+            Assessed Value After 2024 Revaluation
           </label>
           <input
             type="number"
@@ -50,18 +50,18 @@
             value="244000"
           />
           <p id="assessedPostHelp" class="mt-1 text-sm text-gray-500">
-            Your property’s new assessment after revaluation.
+            Your property’s new assessment effective for FY 2026, following the revaluation.
           </p>
         </div>
       </div>
 
       <hr class="my-6" />
 
-      <h2 class="text-xl font-semibold mb-4 border-b pb-2">Pre-Revaluation Rates</h2>
+      <h2 class="text-xl font-semibold mb-4 border-b pb-2">Rates Before 2024 Revaluation</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label for="councilMillPre" class="block font-medium mb-1">
-            Pre-Reval Council Mill Rate
+            Council Mill Rate Before 2024 Revaluation
           </label>
           <input
             type="number"
@@ -73,13 +73,13 @@
             value="29.97"
           />
           <p id="councilMillPreHelp" class="mt-1 text-sm text-gray-500">
-            Tax rate before the 2024 revaluation.
+            The tax rate (mills) the Town Council used before the October 2024 revaluation.
           </p>
         </div>
 
         <div>
           <label for="equalizedMillPre" class="block font-medium mb-1">
-            Pre-Reval Equalized Rate
+            Equalized Rate Before 2024 Revaluation
           </label>
           <input
             type="number"
@@ -91,13 +91,13 @@
             value="27.97"
           />
           <p id="equalizedMillPreHelp" class="mt-1 text-sm text-gray-500">
-            Rate if the new values were taxed all at once.
+            The rate (mills) that shows what the council rate would have been if revalued values applied immediately.
           </p>
         </div>
 
         <div>
           <label for="millRatePre" class="block font-medium mb-1">
-            Base Mill Rate (Pre-Reval)
+            Base Mill Rate (Before Revaluation)
           </label>
           <input
             type="number"
@@ -109,7 +109,7 @@
             value="37.49"
           />
           <p id="millRatePreHelp" class="mt-1 text-sm text-gray-500">
-            Used to calculate your tax before revaluation.
+            Used to calculate your tax based on the pre-revaluation assessed value.
           </p>
         </div>
       </div>
@@ -132,7 +132,7 @@
             value="35.64"
           />
           <p id="councilMillY1Help" class="mt-1 text-sm text-gray-500">
-            Tax rate for FY 2026.
+            The tax rate (mills) adopted for fiscal year 2026.
           </p>
         </div>
 
@@ -150,7 +150,7 @@
             value="34.27"
           />
           <p id="equalizedMillY1Help" class="mt-1 text-sm text-gray-500">
-            Fully phased rate for comparison.
+            The fully phased-in rate used for comparison in FY 2026.
           </p>
         </div>
       </div>
@@ -173,7 +173,7 @@
             value="34.03"
           />
           <p id="councilMillY2Help" class="mt-1 text-sm text-gray-500">
-            Tax rate for FY 2027.
+            The tax rate (mills) adopted for fiscal year 2027.
           </p>
         </div>
 
@@ -191,7 +191,7 @@
             value="31.88"
           />
           <p id="equalizedMillY2Help" class="mt-1 text-sm text-gray-500">
-            Fully phased rate for comparison.
+            The fully phased-in rate used for comparison in FY 2027.
           </p>
         </div>
       </div>
@@ -214,7 +214,7 @@
             value="32.11"
           />
           <p id="councilMillY3Help" class="mt-1 text-sm text-gray-500">
-            Tax rate for FY 2028.
+            The tax rate (mills) adopted for fiscal year 2028.
           </p>
         </div>
 
@@ -232,7 +232,7 @@
             value="29.80"
           />
           <p id="equalizedMillY3Help" class="mt-1 text-sm text-gray-500">
-            Fully phased rate for comparison.
+            The fully phased-in rate used for comparison in FY 2028.
           </p>
         </div>
       </div>
@@ -255,7 +255,7 @@
             value="30.45"
           />
           <p id="councilMillY4Help" class="mt-1 text-sm text-gray-500">
-            Tax rate for FY 2029.
+            The tax rate (mills) adopted for fiscal year 2029.
           </p>
         </div>
 
@@ -273,7 +273,7 @@
             value="27.97"
           />
           <p id="equalizedMillY4Help" class="mt-1 text-sm text-gray-500">
-            Fully phased rate for comparison.
+            The fully phased-in rate used for comparison in FY 2029.
           </p>
         </div>
       </div>
@@ -419,97 +419,97 @@
       }
 
       html += '<div class="text-lg font-semibold mb-2">Before Revaluation</div>';
-      appendLine('Property Value Pre', propertyValuePre.toFixed(2));
-      appendLine('Assessed Value Pre', assessedPre.toFixed(2));
-      appendLine('Assessed Mill Pre', assessedMillPre.toFixed(5));
-      appendLine('Mill Rate Pre', millRatePre.toFixed(2));
-      appendLine('Tax Pre', annualTaxPre.toFixed(2));
+      appendLine('Property Value Before', propertyValuePre.toFixed(2));
+      appendLine('Assessed Value Before', assessedPre.toFixed(2));
+      appendLine('Assessed Mill Before', assessedMillPre.toFixed(5));
+      appendLine('Mill Rate Before', millRatePre.toFixed(2));
+      appendLine('Tax Before', annualTaxPre.toFixed(2));
 
       html += '<div class="mt-4 text-lg font-semibold mb-2">Average Increase</div>';
-      appendLine('Avg Increase', (avgInc * 100).toFixed(2) + '%');
+      appendLine('Average Increase', (avgInc * 100).toFixed(2) + '%');
 
       html += '<div class="mt-4 text-lg font-semibold mb-2">After Revaluation</div>';
-      appendLine('Property Value Post Prior', propertyValuePost.toFixed(2));
-      appendLine('Assessed Value Post Prior', assessedPost.toFixed(2));
-      appendLine('Assessed Mill Post Prior', (assessedPost / 1000).toFixed(5));
-      appendLine('Equalized Mill Pre', equalizedMillPre.toFixed(2));
-      appendLine('Council Mill Pre', councilMillPre.toFixed(2));
-      appendLine('Tax Due to Reval Pre', estRevalPre.toFixed(2));
-      appendLine('Council Tax Pre', councilPre.toFixed(2));
+      appendLine('Property Value New', propertyValuePost.toFixed(2));
+      appendLine('Assessed Value New', assessedPost.toFixed(2));
+      appendLine('Assessed Mill New', (assessedPost / 1000).toFixed(5));
+      appendLine('Equalized Rate Before', equalizedMillPre.toFixed(2));
+      appendLine('Council Rate Before', councilMillPre.toFixed(2));
+      appendLine('Tax Due to Reval Before', estRevalPre.toFixed(2));
+      appendLine('Council Tax Before', councilPre.toFixed(2));
 
-      html += '<div class="mt-4 text-lg font-semibold mb-2">Tax Increase Pre</div>';
-      appendLine('Annual Increase Pre', incPre.toFixed(2));
-      appendLine('Monthly Increase Pre', monPre.toFixed(2));
-      appendLine('Pct Increase due to Reval Pre', (pctRevalPre * 100).toFixed(2) + '%');
-      appendLine('Pct Increase (Tax) Pre', (pctTaxPre * 100).toFixed(2) + '%');
+      html += '<div class="mt-4 text-lg font-semibold mb-2">Tax Increase Before</div>';
+      appendLine('Annual Increase Before', incPre.toFixed(2));
+      appendLine('Monthly Increase Before', monPre.toFixed(2));
+      appendLine('Pct Increase due to Reval Before', (pctRevalPre * 100).toFixed(2) + '%');
+      appendLine('Pct Increase (Tax) Before', (pctTaxPre * 100).toFixed(2) + '%');
 
       html += '<div class="mt-4 text-lg font-semibold mb-2">Assessment Change</div>';
       appendLine('Change in Assessment', changeInAssessment.toFixed(2));
-      appendLine('One Quarter', quarterPhase.toFixed(2));
+      appendLine('One Quarter of Change', quarterPhase.toFixed(2));
 
       html += '<div class="mt-6 text-xl font-semibold text-gray-800">FY 2026 (Year 1)</div>';
-      appendLine('Assessed Value Y1', assessedY1.toFixed(2));
-      appendLine('Assessed Mill Y1', assessedMillY1.toFixed(5));
-      appendLine('Mill Rate Y1', millRatePre.toFixed(2));
-      appendLine('Tax Due to Reval Y1', estRevalY1.toFixed(2));
-      appendLine('Council Tax Y1', councilY1.toFixed(2));
-      appendLine('Annual Increase Y1', incY1.toFixed(2));
-      appendLine('Monthly Increase Y1', monY1.toFixed(2));
-      appendLine('Pct Increase due to Reval Y1', (pctRevalY1 * 100).toFixed(2) + '%');
-      appendLine('Pct Increase (Tax) Y1', (pctTaxY1 * 100).toFixed(2) + '%');
-      appendLine('Property Value Y1', propertyY1.toFixed(2));
-      appendLine('Assessed Post Y1', assessedPostY1.toFixed(2));
-      appendLine('Assessed Mill Post Y1', assessedPostMillY1.toFixed(5));
-      appendLine('Tax Due to Reval Post Y1', estRevalPostY1.toFixed(2));
-      appendLine('Council Tax Post Y1', councilPostY1.toFixed(2));
+      appendLine('Assessed Value Year 1', assessedY1.toFixed(2));
+      appendLine('Assessed Mill Year 1', assessedMillY1.toFixed(5));
+      appendLine('Mill Rate Year 1', millRatePre.toFixed(2));
+      appendLine('Tax Due to Reval Year 1', estRevalY1.toFixed(2));
+      appendLine('Council Tax Year 1', councilY1.toFixed(2));
+      appendLine('Annual Increase Year 1', incY1.toFixed(2));
+      appendLine('Monthly Increase Year 1', monY1.toFixed(2));
+      appendLine('Pct Increase due to Reval Year 1', (pctRevalY1 * 100).toFixed(2) + '%');
+      appendLine('Pct Increase (Tax) Year 1', (pctTaxY1 * 100).toFixed(2) + '%');
+      appendLine('Property Value Year 1', propertyY1.toFixed(2));
+      appendLine('Assessed Value New Year 1', assessedPostY1.toFixed(2));
+      appendLine('Assessed Mill New Year 1', assessedPostMillY1.toFixed(5));
+      appendLine('Tax Due to Reval New Year 1', estRevalPostY1.toFixed(2));
+      appendLine('Council Tax New Year 1', councilPostY1.toFixed(2));
 
       html += '<div class="mt-6 text-xl font-semibold text-gray-800">FY 2027 (Year 2)</div>';
-      appendLine('Assessed Value Y2', assessedY2.toFixed(2));
-      appendLine('Assessed Mill Y2', assessedMillY2.toFixed(5));
-      appendLine('Mill Rate Y2', councilY1.toFixed(2));
-      appendLine('Tax Due to Reval Y2', estRevalY2.toFixed(2));
-      appendLine('Council Tax Y2', councilY2.toFixed(2));
-      appendLine('Annual Increase Y2', incY2.toFixed(2));
-      appendLine('Monthly Increase Y2', monY2.toFixed(2));
-      appendLine('Pct Increase due to Reval Y2', (pctRevalY2 * 100).toFixed(2) + '%');
-      appendLine('Pct Increase (Tax) Y2', (pctTaxY2 * 100).toFixed(2) + '%');
-      appendLine('Property Value Y2', propertyY2.toFixed(2));
-      appendLine('Assessed Post Y2', assessedPostY2.toFixed(2));
-      appendLine('Assessed Mill Post Y2', assessedPostMillY2.toFixed(5));
-      appendLine('Tax Due to Reval Post Y2', estRevalPostY2.toFixed(2));
-      appendLine('Council Tax Post Y2', councilPostY2.toFixed(2));
+      appendLine('Assessed Value Year 2', assessedY2.toFixed(2));
+      appendLine('Assessed Mill Year 2', assessedMillY2.toFixed(5));
+      appendLine('Mill Rate Year 2', councilY1.toFixed(2));
+      appendLine('Tax Due to Reval Year 2', estRevalY2.toFixed(2));
+      appendLine('Council Tax Year 2', councilY2.toFixed(2));
+      appendLine('Annual Increase Year 2', incY2.toFixed(2));
+      appendLine('Monthly Increase Year 2', monY2.toFixed(2));
+      appendLine('Pct Increase due to Reval Year 2', (pctRevalY2 * 100).toFixed(2) + '%');
+      appendLine('Pct Increase (Tax) Year 2', (pctTaxY2 * 100).toFixed(2) + '%');
+      appendLine('Property Value Year 2', propertyY2.toFixed(2));
+      appendLine('Assessed Value New Year 2', assessedPostY2.toFixed(2));
+      appendLine('Assessed Mill New Year 2', assessedPostMillY2.toFixed(5));
+      appendLine('Tax Due to Reval New Year 2', estRevalPostY2.toFixed(2));
+      appendLine('Council Tax New Year 2', councilPostY2.toFixed(2));
 
       html += '<div class="mt-6 text-xl font-semibold text-gray-800">FY 2028 (Year 3)</div>';
-      appendLine('Assessed Value Y3', assessedY3.toFixed(2));
-      appendLine('Assessed Mill Y3', assessedMillY3.toFixed(5));
-      appendLine('Mill Rate Y3', councilY2.toFixed(2));
-      appendLine('Tax Due to Reval Y3', estRevalY3.toFixed(2));
-      appendLine('Council Tax Y3', councilY3.toFixed(2));
-      appendLine('Annual Increase Y3', incY3.toFixed(2));
-      appendLine('Monthly Increase Y3', monY3.toFixed(2));
-      appendLine('Pct Increase due to Reval Y3', (pctRevalY3 * 100).toFixed(2) + '%');
-      appendLine('Pct Increase (Tax) Y3', (pctTaxY3 * 100).toFixed(2) + '%');
-      appendLine('Property Value Y3', propertyY3.toFixed(2));
-      appendLine('Assessed Post Y3', assessedPostY3.toFixed(2));
-      appendLine('Assessed Mill Post Y3', assessedPostMillY3.toFixed(5));
-      appendLine('Tax Due to Reval Post Y3', estRevalPostY3.toFixed(2));
-      appendLine('Council Tax Post Y3', councilPostY3.toFixed(2));
+      appendLine('Assessed Value Year 3', assessedY3.toFixed(2));
+      appendLine('Assessed Mill Year 3', assessedMillY3.toFixed(5));
+      appendLine('Mill Rate Year 3', councilY2.toFixed(2));
+      appendLine('Tax Due to Reval Year 3', estRevalY3.toFixed(2));
+      appendLine('Council Tax Year 3', councilY3.toFixed(2));
+      appendLine('Annual Increase Year 3', incY3.toFixed(2));
+      appendLine('Monthly Increase Year 3', monY3.toFixed(2));
+      appendLine('Pct Increase due to Reval Year 3', (pctRevalY3 * 100).toFixed(2) + '%');
+      appendLine('Pct Increase (Tax) Year 3', (pctTaxY3 * 100).toFixed(2) + '%');
+      appendLine('Property Value Year 3', propertyY3.toFixed(2));
+      appendLine('Assessed Value New Year 3', assessedPostY3.toFixed(2));
+      appendLine('Assessed Mill New Year 3', assessedPostMillY3.toFixed(5));
+      appendLine('Tax Due to Reval New Year 3', estRevalPostY3.toFixed(2));
+      appendLine('Council Tax New Year 3', councilPostY3.toFixed(2));
 
       html += '<div class="mt-6 text-xl font-semibold text-gray-800">FY 2029 (Year 4)</div>';
-      appendLine('Assessed Value Y4', assessedY4.toFixed(2));
-      appendLine('Assessed Mill Y4', assessedMillY4.toFixed(5));
-      appendLine('Mill Rate Y4', councilY3.toFixed(2));
-      appendLine('Tax Due to Reval Y4', estRevalY4.toFixed(2));
-      appendLine('Council Tax Y4', councilY4.toFixed(2));
-      appendLine('Annual Increase Y4', incY4.toFixed(2));
-      appendLine('Monthly Increase Y4', monY4.toFixed(2));
-      appendLine('Pct Increase due to Reval Y4', (pctRevalY4 * 100).toFixed(2) + '%');
-      appendLine('Pct Increase (Tax) Y4', (pctTaxY4 * 100).toFixed(2) + '%');
-      appendLine('Property Value Y4', propertyY4.toFixed(2));
-      appendLine('Assessed Post Y4', assessedPostY4.toFixed(2));
-      appendLine('Assessed Mill Post Y4', assessedPostMillY4.toFixed(5));
-      appendLine('Tax Due to Reval Post Y4', estRevalPostY4.toFixed(2));
-      appendLine('Council Tax Post Y4', councilPostY4.toFixed(2));
+      appendLine('Assessed Value Year 4', assessedY4.toFixed(2));
+      appendLine('Assessed Mill Year 4', assessedMillY4.toFixed(5));
+      appendLine('Mill Rate Year 4', councilY3.toFixed(2));
+      appendLine('Tax Due to Reval Year 4', estRevalY4.toFixed(2));
+      appendLine('Council Tax Year 4', councilY4.toFixed(2));
+      appendLine('Annual Increase Year 4', incY4.toFixed(2));
+      appendLine('Monthly Increase Year 4', monY4.toFixed(2));
+      appendLine('Pct Increase due to Reval Year 4', (pctRevalY4 * 100).toFixed(2) + '%');
+      appendLine('Pct Increase (Tax) Year 4', (pctTaxY4 * 100).toFixed(2) + '%');
+      appendLine('Property Value Year 4', propertyY4.toFixed(2));
+      appendLine('Assessed Value New Year 4', assessedPostY4.toFixed(2));
+      appendLine('Assessed Mill New Year 4', assessedPostMillY4.toFixed(5));
+      appendLine('Tax Due to Reval New Year 4', estRevalPostY4.toFixed(2));
+      appendLine('Council Tax New Year 4', councilPostY4.toFixed(2));
 
       resultsEl.innerHTML = html;
     });
