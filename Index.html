@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bloomfield real estate tax calculator for fiscal years 2026-2029" />
   <title>Bloomfield Real Estate Tax Calculator</title>
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -228,7 +229,7 @@
   </div>
 
   <!-- JavaScript: replicate every cell formula from the Excel sheet -->
-  <script>
+  <script defer>
     document.getElementById('calculateBtn').addEventListener('click', () => {
       // 1. Read and parse all input values
       const assessedPre          = parseFloat(document.getElementById('assessedPre').value) || 0;
@@ -364,16 +365,15 @@
       // Now package everything into HTML in exactly the same field order as the sheet
       const resultsEl = document.getElementById('results');
       resultsEl.innerHTML = ''; // clear previous results
+      let html = '';
 
       // Helper to append a label + value
       function appendLine(label, value) {
-        const div = document.createElement('div');
-        div.className = 'flex justify-between border-b py-1';
-        div.innerHTML = `
-          <span class="font-semibold text-gray-800">${label}</span>
-          <span class="text-gray-700">${value}</span>
-        `;
-        resultsEl.appendChild(div);
+        html += `
+          <div class="flex justify-between border-b py-1">
+            <span class="font-semibold text-gray-800">${label}</span>
+            <span class="text-gray-700">${value}</span>
+          </div>`;
       }
 
       // 1) Before Revaluation block (rows 8–13)
@@ -423,10 +423,7 @@
       appendLine('One Quarter Phasing (B33 = B32 ÷ 4)', quarterPhase.toFixed(2));
 
       // 7) Year 1 (FY 2026) block
-      const year1Header = document.createElement('div');
-      year1Header.className = 'mt-6 font-bold text-lg text-gray-800';
-      year1Header.textContent = 'FY 2026 (Year 1)';
-      resultsEl.appendChild(year1Header);
+      html += '<div class="mt-6 font-bold text-lg text-gray-800">FY 2026 (Year 1)</div>';
 
       appendLine('Assessed Value Y1 (D10 = B10)', assessedY1.toFixed(2));
       appendLine('Assessed Value (mills) Y1 (D11 = D10 ÷ 1000)', assessedMillY1.toFixed(5));
@@ -459,10 +456,7 @@
       );
 
       // 8) Year 2 (FY 2027) block
-      const year2Header = document.createElement('div');
-      year2Header.className = 'mt-6 font-bold text-lg text-gray-800';
-      year2Header.textContent = 'FY 2027 (Year 2)';
-      resultsEl.appendChild(year2Header);
+      html += '<div class="mt-6 font-bold text-lg text-gray-800">FY 2027 (Year 2)</div>';
 
       appendLine('Assessed Value Y2 (E10 = D10 + B33)', assessedY2.toFixed(2));
       appendLine('Assessed Value (mills) Y2 (E11 = E10 ÷ 1000)', assessedMillY2.toFixed(5));
@@ -501,10 +495,7 @@
       );
 
       // 9) Year 3 (FY 2028) block
-      const year3Header = document.createElement('div');
-      year3Header.className = 'mt-6 font-bold text-lg text-gray-800';
-      year3Header.textContent = 'FY 2028 (Year 3)';
-      resultsEl.appendChild(year3Header);
+      html += '<div class="mt-6 font-bold text-lg text-gray-800">FY 2028 (Year 3)</div>';
 
       appendLine('Assessed Value Y3 (F10 = E10 + B33)', assessedY3.toFixed(2));
       appendLine('Assessed Value (mills) Y3 (F11 = F10 ÷ 1000)', assessedMillY3.toFixed(5));
@@ -543,10 +534,7 @@
       );
 
       // 10) Year 4 (FY 2029) block
-      const year4Header = document.createElement('div');
-      year4Header.className = 'mt-6 font-bold text-lg text-gray-800';
-      year4Header.textContent = 'FY 2029 (Year 4)';
-      resultsEl.appendChild(year4Header);
+      html += '<div class="mt-6 font-bold text-lg text-gray-800">FY 2029 (Year 4)</div>';
 
       appendLine('Assessed Value Y4 (G10 = F10 + B33)', assessedY4.toFixed(2));
       appendLine('Assessed Value (mills) Y4 (G11 = G10 ÷ 1000)', assessedMillY4.toFixed(5));
@@ -583,6 +571,8 @@
         'Estimated Annual Taxes Council Post Y4 (G24 = G20 × G22)',
         estAnnualTaxCouncilPostY4.toFixed(2)
       );
+
+      resultsEl.innerHTML = html;
     });
   </script>
 </body>
