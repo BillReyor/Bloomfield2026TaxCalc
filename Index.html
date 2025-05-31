@@ -3,185 +3,587 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bloomfield Property Tax Estimator</title>
-  <!-- Tailwind CSS for simple, modern styling -->
+  <title>Bloomfield Real Estate Tax Calculator</title>
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900">
-  <div class="max-w-xl mx-auto p-6">
-    <!-- Page Title -->
-    <h1 class="text-2xl font-bold text-center mb-4">
-      Bloomfield, CT Property Tax Estimator
+  <div class="max-w-3xl mx-auto p-6">
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-center mb-6">
+      Bloomfield Real Estate Tax Calculator (FY 2026 – FY 2029)
     </h1>
 
-    <!-- Short Intro -->
+    <!-- Intro -->
     <p class="mb-6 text-gray-700">
-      Enter your property’s assessed values and other details below to see a four‐year projection of your residential tax bill in Bloomfield. 
-      Each estimate reflects the phase-in schedule: 
-      Year 1 (25 % of the revaluation increase), 
-      Year 2 (50 %), 
-      Year 3 (75 %), 
-      and Year 4 (100 % of the new assessed value). 
-      <strong>Note:</strong> Connecticut law sets assessed value at 70 % of market value.
+      Enter your assessed values, mill rates, and budget-increase percentage exactly as shown on the “Real Estate Impact – Example” sheet. 
+      Once you click Calculate, you’ll see every field and formula from that spreadsheet reflected below, year by year. 
+      This lets you verify your own residential‐tax impact over the four-year phase-in.
     </p>
 
-    <!-- Input Form Container -->
-    <div class="bg-white shadow-md rounded p-4 mb-4">
-      <!-- Previous Assessed Value -->
-      <label for="prevValue" class="block font-medium mb-1">
-        Previous Assessed Value (Pre‐Revaluation)
+    <!-- Input Form -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+      <!-- Pre-Revaluation Assessed Value -->
+      <label for="assessedPre" class="block font-medium mb-1">
+        Previous Assessed Value (Pre-Revaluation) 
+        <span class="text-sm text-gray-500">(e.g. cell B10)</span>
       </label>
       <input
         type="number"
-        id="prevValue"
-        class="w-full mb-3 p-2 border border-gray-300 rounded"
-        placeholder="e.g. 140000"
-      />
-
-      <!-- Current Assessed Value -->
-      <label for="newValue" class="block font-medium mb-1">
-        Current Assessed Value (Post‐Revaluation)
-      </label>
-      <input
-        type="number"
-        id="newValue"
-        class="w-full mb-3 p-2 border border-gray-300 rounded"
-        placeholder="e.g. 180000"
-      />
-
-      <!-- Town Mill Rate -->
-      <label for="townMill" class="block font-medium mb-1">
-        Town Mill Rate
-      </label>
-      <input
-        type="number"
-        id="townMill"
-        class="w-full mb-3 p-2 border border-gray-300 rounded"
-        placeholder="e.g. 35.64"
-        step="0.01"
-      />
-
-      <!-- Fire District Mill Rate -->
-      <label for="fireMill" class="block font-medium mb-1">
-        Fire District Mill Rate
-      </label>
-      <input
-        type="number"
-        id="fireMill"
-        class="w-full mb-3 p-2 border border-gray-300 rounded"
-        placeholder="e.g. 2.50 (if applicable)"
-        step="0.01"
-      />
-
-      <!-- Exemptions -->
-      <label for="exemptions" class="block font-medium mb-1">
-        Total Exemptions/Deductions (Assessed Value)
-      </label>
-      <input
-        type="number"
-        id="exemptions"
+        id="assessedPre"
         class="w-full mb-4 p-2 border border-gray-300 rounded"
-        placeholder="e.g. 3000 (veteran exemption, etc)"
+        placeholder="e.g. 169470"
       />
+
+      <!-- Post-Revaluation Assessed Value -->
+      <label for="assessedPost" class="block font-medium mb-1">
+        Current Assessed Value (Post-Revaluation) 
+        <span class="text-sm text-gray-500">(e.g. cell B19)</span>
+      </label>
+      <input
+        type="number"
+        id="assessedPost"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 262710"
+      />
+
+      <!-- Pre-Reval Mill Rate (B12) -->
+      <label for="millRatePre" class="block font-medium mb-1">
+        Pre-Reval Mill Rate 
+        <span class="text-sm text-gray-500">(cell B12)</span>
+      </label>
+      <input
+        type="number"
+        id="millRatePre"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 37.49"
+      />
+
+      <!-- Pre-Reval Equalized Mill (B21) -->
+      <label for="equalizedMillPre" class="block font-medium mb-1">
+        Pre-Reval Equalized Mill Rate 
+        <span class="text-sm text-gray-500">(cell B21)</span>
+      </label>
+      <input
+        type="number"
+        id="equalizedMillPre"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 27.97"
+      />
+
+      <!-- Pre-Reval Council Mill (B22) -->
+      <label for="councilMillPre" class="block font-medium mb-1">
+        Pre-Reval Council Mill Rate 
+        <span class="text-sm text-gray-500">(cell B22)</span>
+      </label>
+      <input
+        type="number"
+        id="councilMillPre"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 29.97"
+      />
+
+      <hr class="my-6" />
+
+      <!-- FY 2026 Equalized & Council Mills (D21 & D22) -->
+      <label for="equalizedMillY1" class="block font-medium mb-1">
+        FY 2026 Equalized Mill Rate 
+        <span class="text-sm text-gray-500">(cell D21)</span>
+      </label>
+      <input
+        type="number"
+        id="equalizedMillY1"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 34.27"
+      />
+
+      <label for="councilMillY1" class="block font-medium mb-1">
+        FY 2026 Council Mill Rate 
+        <span class="text-sm text-gray-500">(cell D22)</span>
+      </label>
+      <input
+        type="number"
+        id="councilMillY1"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 35.64"
+      />
+
+      <hr class="my-6" />
+
+      <!-- FY 2027 Equalized & Council Mills (E21 & E22) -->
+      <label for="equalizedMillY2" class="block font-medium mb-1">
+        FY 2027 Equalized Mill Rate 
+        <span class="text-sm text-gray-500">(cell E21)</span>
+      </label>
+      <input
+        type="number"
+        id="equalizedMillY2"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 31.88"
+      />
+
+      <label for="councilMillY2" class="block font-medium mb-1">
+        FY 2027 Council Mill Rate 
+        <span class="text-sm text-gray-500">(cell E22 = E21 × E33)</span>
+      </label>
+      <input
+        type="number"
+        id="councilMillY2"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. …"
+      />
+
+      <hr class="my-6" />
+
+      <!-- FY 2028 Equalized & Council Mills (F21 & F22) -->
+      <label for="equalizedMillY3" class="block font-medium mb-1">
+        FY 2028 Equalized Mill Rate 
+        <span class="text-sm text-gray-500">(cell F21)</span>
+      </label>
+      <input
+        type="number"
+        id="equalizedMillY3"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 29.80"
+      />
+
+      <label for="councilMillY3" class="block font-medium mb-1">
+        FY 2028 Council Mill Rate 
+        <span class="text-sm text-gray-500">(cell F22 = F21 × F33)</span>
+      </label>
+      <input
+        type="number"
+        id="councilMillY3"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. …"
+      />
+
+      <hr class="my-6" />
+
+      <!-- FY 2029 Equalized & Council Mills (G21 & G22) -->
+      <label for="equalizedMillY4" class="block font-medium mb-1">
+        FY 2029 Equalized Mill Rate 
+        <span class="text-sm text-gray-500">(cell G21)</span>
+      </label>
+      <input
+        type="number"
+        id="equalizedMillY4"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 27.97"
+      />
+
+      <label for="councilMillY4" class="block font-medium mb-1">
+        FY 2029 Council Mill Rate 
+        <span class="text-sm text-gray-500">(cell G22 = G21 × G33)</span>
+      </label>
+      <input
+        type="number"
+        id="councilMillY4"
+        step="0.01"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. …"
+      />
+
+      <hr class="my-6" />
+
+      <!-- Future Budget Increase (F2) -->
+      <label for="futureBudgetIncrease" class="block font-medium mb-1">
+        Future Budget Increase (%)
+        <span class="text-sm text-gray-500">(cell F2, as a decimal)</span>
+      </label>
+      <input
+        type="number"
+        id="futureBudgetIncrease"
+        step="0.001"
+        class="w-full mb-4 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 0.03 for 3 %"
+        value="0.03"
+      />
+
+      <hr class="my-6" />
 
       <!-- Calculate Button -->
       <button
-        id="calcBtn"
-        class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700"
+        id="calculateBtn"
+        class="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700"
       >
-        Calculate Tax by Year
+        Calculate All Formulas
       </button>
     </div>
 
-    <!-- Container for Four‐Year Results -->
-    <div id="resultsContainer" class="space-y-2 text-lg font-medium text-blue-800">
-      <!-- JavaScript will inject four lines here -->
+    <!-- Results Section -->
+    <div id="results" class="bg-white shadow-md rounded-lg p-6 space-y-6">
+      <!-- Script will inject every computed field here -->
     </div>
   </div>
 
-  <!-- JavaScript to perform four‐year calculation -->
+  <!-- JavaScript: replicate every cell formula from the Excel sheet -->
   <script>
-    // Grab references to each input & result container
-    const prevInput = document.getElementById('prevValue');
-    const newInput = document.getElementById('newValue');
-    const townMillInput = document.getElementById('townMill');
-    const fireMillInput = document.getElementById('fireMill');
-    const exemptionsInput = document.getElementById('exemptions');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const calcBtn = document.getElementById('calcBtn');
+    document.getElementById('calculateBtn').addEventListener('click', () => {
+      // 1. Read and parse all input values
+      const assessedPre          = parseFloat(document.getElementById('assessedPre').value) || 0;
+      const assessedPost         = parseFloat(document.getElementById('assessedPost').value) || 0;
+      const millRatePre          = parseFloat(document.getElementById('millRatePre').value) || 0;
+      const equalizedMillPre     = parseFloat(document.getElementById('equalizedMillPre').value) || 0;
+      const councilMillPre       = parseFloat(document.getElementById('councilMillPre').value) || 0;
+      const equalizedMillY1      = parseFloat(document.getElementById('equalizedMillY1').value) || 0;
+      const councilMillY1        = parseFloat(document.getElementById('councilMillY1').value) || 0;
+      const equalizedMillY2      = parseFloat(document.getElementById('equalizedMillY2').value) || 0;
+      const councilMillY2        = parseFloat(document.getElementById('councilMillY2').value) || 0;
+      const equalizedMillY3      = parseFloat(document.getElementById('equalizedMillY3').value) || 0;
+      const councilMillY3        = parseFloat(document.getElementById('councilMillY3').value) || 0;
+      const equalizedMillY4      = parseFloat(document.getElementById('equalizedMillY4').value) || 0;
+      const councilMillY4        = parseFloat(document.getElementById('councilMillY4').value) || 0;
+      const futureBudgetIncrease = parseFloat(document.getElementById('futureBudgetIncrease').value) || 0;
 
-    // Set default mill rates (update as needed each year)
-    townMillInput.value = 35.64; // example for FY2026
-    fireMillInput.value = 0;     // default 0 if no separate fire district
+      // 2. Compute “Property Value Pre” (B9 = B10 ÷ 0.7)
+      const propertyValuePre = assessedPre / 0.7;
 
-    function calculateFourYears() {
-      // Parse user entries
-      const prevVal = parseFloat(prevInput.value);
-      const newVal = parseFloat(newInput.value);
-      const townRate = parseFloat(townMillInput.value) || 0;
-      const fireRate = parseFloat(fireMillInput.value) || 0;
-      const exemptAmt = parseFloat(exemptionsInput.value) || 0;
+      // 3. Compute “Assessed Value (mills) Pre” (B11 = B10 ÷ 1000)
+      const assessedMillPre = assessedPre / 1000;
 
-      // Clear any existing messages
-      resultsContainer.innerHTML = '';
+      // 4. Compute “Estimated Annual Tax Pre (due to millRatePre)” (B13 = B11 × B12)
+      const annualTaxPreUsingMillRatePre = assessedMillPre * millRatePre;
 
-      // Validate that both assessed values are positive and different
-      if (isNaN(prevVal) || prevVal <= 0) {
-        resultsContainer.textContent = 
-          'Please enter a valid previous assessed value.';
-        return;
+      // 5. Compute “Assessed Value (Post) Property Value” (B18 = B19 ÷ 0.7)
+      const propertyValuePost = assessedPost / 0.7;
+
+      // 6. Compute “Change in Assessment” (B32 = B19 − B10)
+      const changeInAssessment = assessedPost - assessedPre;
+
+      // 7. Compute “One Quarter Phasing” (B33 = B32 ÷ 4)
+      const quarterPhase = changeInAssessment / 4;
+
+      // 8. Build “Assessed Value Year 1–4” (rows D10–G10)
+      const assessedY1 = assessedPre;                     // Year 1 (D10 = B10)
+      const assessedY2 = assessedY1 + quarterPhase;       // Year 2 (E10 = D10 + B33)
+      const assessedY3 = assessedY2 + quarterPhase;       // Year 3 (F10 = E10 + B33)
+      const assessedY4 = assessedY3 + quarterPhase;       // Year 4 (G10 = F10 + B33)
+
+      // 9. Convert each to “mills” (rows D11–G11)
+      const assessedMillY1 = assessedY1 / 1000;
+      const assessedMillY2 = assessedY2 / 1000;
+      const assessedMillY3 = assessedY3 / 1000;
+      const assessedMillY4 = assessedY4 / 1000;
+
+      // 10. “Estimated Taxes Due to Reval” for Pre, Year 1, Year 2 (rows B23–E23)
+      const estTaxDueRevalPre = assessedMillPre * equalizedMillPre; // (B23)
+      const estTaxDueRevalY1  = assessedMillY1 * equalizedMillY1;   // (D23)
+      const estTaxDueRevalY2  = assessedMillY2 * equalizedMillY2;   // (E23)
+
+      // For Year 3 (F23 = E23 × (1 + F2)) and Year 4 (G23 = F23 × (1 + F2))
+      const estTaxDueRevalY3 = estTaxDueRevalY2 * (1 + futureBudgetIncrease); // (F23)
+      const estTaxDueRevalY4 = estTaxDueRevalY3 * (1 + futureBudgetIncrease); // (G23)
+
+      // 11. “Estimated Annual Taxes” (Council) for Pre, Year 1–Year 4 (rows B24–G24)
+      const estAnnualTaxCouncilPre = assessedMillPre * councilMillPre;   // (B24)
+      const estAnnualTaxY1         = assessedMillY1 * councilMillY1;     // (D24)
+      const estAnnualTaxY2         = assessedMillY2 * councilMillY2;     // (E24)
+      const estAnnualTaxY3         = assessedMillY3 * councilMillY3;     // (F24)
+      const estAnnualTaxY4         = assessedMillY4 * councilMillY4;     // (G24)
+
+      // 12. “Estimated Annual Tax Increase” (rows B26–G26)
+      //    Row 26 Pre = B24 − B13; Year 1 = D24 − D13; etc.
+      const taxIncreasePre = estAnnualTaxCouncilPre - annualTaxPreUsingMillRatePre;
+      const taxIncreaseY1  = estAnnualTaxY1 - annualTaxPreUsingMillRatePre;
+      const taxIncreaseY2  = estAnnualTaxY2 - annualTaxPreUsingMillRatePre;
+      const taxIncreaseY3  = estAnnualTaxY3 - annualTaxPreUsingMillRatePre;
+      const taxIncreaseY4  = estAnnualTaxY4 - annualTaxPreUsingMillRatePre;
+
+      // 13. “Estimated Monthly Tax Increase” (rows B27–G27)
+      const monthlyIncreasePre = taxIncreasePre / 12;
+      const monthlyIncreaseY1  = taxIncreaseY1 / 12;
+      const monthlyIncreaseY2  = taxIncreaseY2 / 12;
+      const monthlyIncreaseY3  = taxIncreaseY3 / 12;
+      const monthlyIncreaseY4  = taxIncreaseY4 / 12;
+
+      // 14. “Percentage Increase due to Reval” (rows B29–G29)
+      const pctIncRevalPre = estTaxDueRevalPre / annualTaxPreUsingMillRatePre - 1;
+      const pctIncRevalY1  = estTaxDueRevalY1  / annualTaxPreUsingMillRatePre - 1;
+      const pctIncRevalY2  = estTaxDueRevalY2  / (assessedMillY2 * millRatePre) - 1;
+      const pctIncRevalY3  = estTaxDueRevalY3  / (assessedMillY3 * (millRatePre)) - 1;
+      const pctIncRevalY4  = estTaxDueRevalY4  / (assessedMillY4 * (millRatePre)) - 1;
+
+      // 15. “Percentage Increase (Tax Increase ÷ Pre Tax)” (rows B30–G30)
+      const pctIncTaxPre = taxIncreasePre / annualTaxPreUsingMillRatePre;
+      const pctIncTaxY1  = taxIncreaseY1 / annualTaxPreUsingMillRatePre;
+      const pctIncTaxY2  = taxIncreaseY2 / annualTaxPreUsingMillRatePre;
+      const pctIncTaxY3  = taxIncreaseY3 / annualTaxPreUsingMillRatePre;
+      const pctIncTaxY4  = taxIncreaseY4 / annualTaxPreUsingMillRatePre;
+
+      // 16. “Average Residential Reval Increase” (row 15: B15 = (B19 / B10) − 1, D15 = B15)
+      const avgRevalIncrease = assessedPost / assessedPre - 1;
+
+      // 17. “Property Values Post” for Years 1–4 (rows D18–G18)
+      //     D18 = D9 × (1 + D15); E18 = D18; F18 = E18; G18 = F18
+      //     Here D9 = B9 = assessedPre ÷ 0.7, and D15 = avgRevalIncrease
+      const propertyValueY1 = propertyValuePre * (1 + avgRevalIncrease); // (D18)
+      const propertyValueY2 = propertyValueY1;                           // (E18)
+      const propertyValueY3 = propertyValueY2;                           // (F18)
+      const propertyValueY4 = propertyValueY3;                           // (G18)
+
+      // 18. “Assessed Value Post” for Years 1–4 (rows D19–G19)
+      //     D19 = D10 + B33; E19 = D19 + B33; F19 = E19 + B33; G19 = F19 + B33
+      const assessedPostY1 = assessedY1 + quarterPhase;
+      const assessedPostY2 = assessedPostY1 + quarterPhase;
+      const assessedPostY3 = assessedPostY2 + quarterPhase;
+      const assessedPostY4 = assessedPostY3 + quarterPhase;
+
+      // 19. “Assessed Value (mills Post)” for Years 1–4 (rows D20–G20)
+      const assessedPostMillY1 = assessedPostY1 / 1000;
+      const assessedPostMillY2 = assessedPostY2 / 1000;
+      const assessedPostMillY3 = assessedPostY3 / 1000;
+      const assessedPostMillY4 = assessedPostY4 / 1000;
+
+      // (We already computed B20 and B11; B20 = assessedPost/1000, B11 = assessedPre/1000)
+
+      // 20. “Estimated Taxes Due to Reval Post” for Years 1–4 (rows D23–G23)
+      //     D23 = D20 × D21, E23 = E20 × E21, F23 = E23 × (1 + F2), G23 = F23 × (1 + F2)
+      const estTaxDueRevalPostY1 = assessedPostMillY1 * equalizedMillY1;
+      const estTaxDueRevalPostY2 = assessedPostMillY2 * equalizedMillY2;
+      const estTaxDueRevalPostY3 = estTaxDueRevalPostY2 * (1 + futureBudgetIncrease);
+      const estTaxDueRevalPostY4 = estTaxDueRevalPostY3 * (1 + futureBudgetIncrease);
+
+      // 21. “Estimated Annual Taxes Council Post” for Years 1–4 (rows D24–G24)
+      //     D24 = D20 × D22, E24 = E20 × E22, F24 = F20 × F22, G24 = G20 × G22
+      const estAnnualTaxCouncilPostY1 = assessedPostMillY1 * councilMillY1;
+      const estAnnualTaxCouncilPostY2 = assessedPostMillY2 * councilMillY2;
+      const estAnnualTaxCouncilPostY3 = assessedPostMillY3 * councilMillY3;
+      const estAnnualTaxCouncilPostY4 = assessedPostMillY4 * councilMillY4;
+
+      // Now package everything into HTML in exactly the same field order as the sheet
+      const resultsEl = document.getElementById('results');
+      resultsEl.innerHTML = ''; // clear previous results
+
+      // Helper to append a label + value
+      function appendLine(label, value) {
+        const div = document.createElement('div');
+        div.className = 'flex justify-between border-b py-1';
+        div.innerHTML = `
+          <span class="font-semibold text-gray-800">${label}</span>
+          <span class="text-gray-700">${value}</span>
+        `;
+        resultsEl.appendChild(div);
       }
-      if (isNaN(newVal) || newVal <= 0) {
-        resultsContainer.textContent = 
-          'Please enter a valid current assessed value.';
-        return;
-      }
-      if (prevVal === newVal) {
-        resultsContainer.textContent = 
-          'Previous and current assessed values must differ for phase-in to apply.';
-        return;
-      }
 
-      // Determine the raw increase amount
-      const increase = newVal - prevVal;
+      // 1) Before Revaluation block (rows 8–13)
+      appendLine('Property Value Pre‐Reval (B9 = B10 ÷ 0.7)', propertyValuePre.toFixed(2));
+      appendLine('Assessed Value Pre‐Reval (B10)', assessedPre.toFixed(2));
+      appendLine('Assessed Value (mills) Pre (B11 = B10 ÷ 1000)', assessedMillPre.toFixed(5));
+      appendLine('Mill Rate Pre (B12)', millRatePre.toFixed(2));
+      appendLine('Estimated Annual Taxes Pre (B13 = B11 × B12)', annualTaxPreUsingMillRatePre.toFixed(2));
 
-      // We’ll compute Year1 through Year4. Each year uses a fraction of the increase:
-      // Year1 => 25% of increase  (0.25)
-      // Year2 => 50% of increase  (0.50)
-      // Year3 => 75% of increase  (0.75)
-      // Year4 => 100% of increase (1.00)
-      const phaseFractions = [0.25, 0.50, 0.75, 1.00];
+      // 2) Average Residential Reval Increase (row 15)
+      appendLine(
+        'Average Res. Reval Increase (B15 = B19 ÷ B10 − 1)',
+        (avgRevalIncrease * 100).toFixed(2) + '%'
+      );
 
-      // Combine town mill + fire district mill once
-      const totalMillRate = townRate + fireRate;
+      // 3) After Revaluation block (rows 17–24)
+      appendLine('Property Value Post Pre-phase (B18 = B19 ÷ 0.7)', propertyValuePost.toFixed(2));
+      appendLine('Assessed Value Post Pre-phase (B19)', assessedPost.toFixed(2));
+      appendLine('Assessed Value (mills) Post Pre-phase (B20 = B19 ÷ 1000)', (assessedPost / 1000).toFixed(5));
+      appendLine('Equalized Mill Pre (B21)', equalizedMillPre.toFixed(2));
+      appendLine('Council Mill Pre (B22)', councilMillPre.toFixed(2));
+      appendLine('Estimated Taxes Due to Reval Pre (B23 = B20 × B21)', estTaxDueRevalPre.toFixed(2));
+      appendLine('Estimated Annual Taxes Council Pre (B24 = B20 × B22)', estAnnualTaxCouncilPre.toFixed(2));
 
-      // Loop over each year index
-      phaseFractions.forEach((fraction, index) => {
-        // Compute the “effective assessed value” for this year
-        const yearLabel = `Year ${index + 1}`;
-        const effectiveAssessed = prevVal + increase * fraction;
+      // 4) Estimated Annual Tax Increase Pre (row 26) & Monthly Increase Pre (row 27)
+      appendLine(
+        'Annual Tax Increase Pre (B26 = B24 − B13)',
+        taxIncreasePre.toFixed(2)
+      );
+      appendLine(
+        'Monthly Tax Increase Pre (B27 = B26 ÷ 12)',
+        monthlyIncreasePre.toFixed(2)
+      );
 
-        // Subtract exemptions (don’t go below zero)
-        let netAssessed = effectiveAssessed - exemptAmt;
-        if (netAssessed < 0) netAssessed = 0;
+      // 5) Percentage Increase due to Reval Pre (row 29) & Percentage Increase (Tax) Pre (row 30)
+      appendLine(
+        'Pct Increase due to Reval Pre (B29 = B23 ÷ B13 − 1)',
+        (pctIncRevalPre * 100).toFixed(2) + '%'
+      );
+      appendLine(
+        'Pct Increase (Tax) Pre (B30 = B26 ÷ B13)',
+        (pctIncTaxPre * 100).toFixed(2) + '%'
+      );
 
-        // Compute tax: (netAssessed × totalMillRate) / 1000
-        const tax = (netAssessed * totalMillRate) / 1000;
+      // 6) Change in Assessment (row 32) & One Quarter Phasing (row 33)
+      appendLine('Change in Assessment (B32 = B19 − B10)', changeInAssessment.toFixed(2));
+      appendLine('One Quarter Phasing (B33 = B32 ÷ 4)', quarterPhase.toFixed(2));
 
-        // Create one line of output
-        const line = document.createElement('div');
-        line.textContent = 
-          `${yearLabel} (phase‐in ${(fraction * 100).toFixed(0)} %): ` +
-          `$${tax.toFixed(2)}` +
-          (exemptAmt > 0 ? ' (after exemptions)' : '');
+      // 7) Year 1 (FY 2026) block
+      const year1Header = document.createElement('div');
+      year1Header.className = 'mt-6 font-bold text-lg text-gray-800';
+      year1Header.textContent = 'FY 2026 (Year 1)';
+      resultsEl.appendChild(year1Header);
 
-        // Append to the results container
-        resultsContainer.appendChild(line);
-      });
-    }
+      appendLine('Assessed Value Y1 (D10 = B10)', assessedY1.toFixed(2));
+      appendLine('Assessed Value (mills) Y1 (D11 = D10 ÷ 1000)', assessedMillY1.toFixed(5));
+      appendLine('Mill Rate Y1 (D12 = B12)', millRatePre.toFixed(2));
+      appendLine('Estimated Annual Taxes Y1 (due to Reval) (D23 = D20 × D21)', estTaxDueRevalY1.toFixed(2));
+      appendLine('Estimated Annual Taxes Council Y1 (D24 = D20 × D22)', estAnnualTaxY1.toFixed(2));
+      appendLine('Annual Tax Increase Y1 (D26 = D24 − D13)', taxIncreaseY1.toFixed(2));
+      appendLine('Monthly Tax Increase Y1 (D27 = D26 ÷ 12)', monthlyIncreaseY1.toFixed(2));
+      appendLine(
+        'Pct Increase due to Reval Y1 (D29 = D23 ÷ D13 − 1)',
+        (pctIncRevalY1 * 100).toFixed(2) + '%'
+      );
+      appendLine(
+        'Pct Increase (Tax) Y1 (D30 = D26 ÷ D13)',
+        (pctIncTaxY1 * 100).toFixed(2) + '%'
+      );
+      appendLine('Property Value Y1 (D18 = D9 × (1+D15))', propertyValueY1.toFixed(2));
+      appendLine('Assessed Value Post Y1 (D19 = D10 + B33)', assessedPostY1.toFixed(2));
+      appendLine(
+        'Assessed Value (mills) Post Y1 (D20 = D19 ÷ 1000)',
+        assessedPostMillY1.toFixed(5)
+      );
+      appendLine(
+        'Estimated Taxes Due to Reval Post Y1 (D23 = D20 × D21)',
+        estTaxDueRevalPostY1.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Post Y1 (D24 = D20 × D22)',
+        estAnnualTaxCouncilPostY1.toFixed(2)
+      );
 
-    // When the button is clicked, run the four‐year calculation
-    calcBtn.addEventListener('click', calculateFourYears);
+      // 8) Year 2 (FY 2027) block
+      const year2Header = document.createElement('div');
+      year2Header.className = 'mt-6 font-bold text-lg text-gray-800';
+      year2Header.textContent = 'FY 2027 (Year 2)';
+      resultsEl.appendChild(year2Header);
+
+      appendLine('Assessed Value Y2 (E10 = D10 + B33)', assessedY2.toFixed(2));
+      appendLine('Assessed Value (mills) Y2 (E11 = E10 ÷ 1000)', assessedMillY2.toFixed(5));
+      appendLine('Mill Rate Y2 (E12 = D22)', councilMillY1.toFixed(2));
+      appendLine(
+        'Estimated Annual Taxes Y2 (due to Reval) (E23 = E20 × E21)',
+        estTaxDueRevalY2.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Y2 (E24 = E20 × E22)',
+        estAnnualTaxY2.toFixed(2)
+      );
+      appendLine('Annual Tax Increase Y2 (E26 = E24 − E13)', taxIncreaseY2.toFixed(2));
+      appendLine('Monthly Tax Increase Y2 (E27 = E26 ÷ 12)', monthlyIncreaseY2.toFixed(2));
+      appendLine(
+        'Pct Increase due to Reval Y2 (E29 = E23 ÷ E13 − 1)',
+        (pctIncRevalY2 * 100).toFixed(2) + '%'
+      );
+      appendLine(
+        'Pct Increase (Tax) Y2 (E30 = E26 ÷ E13)',
+        (pctIncTaxY2 * 100).toFixed(2) + '%'
+      );
+      appendLine('Property Value Y2 (E18 = D18)', propertyValueY2.toFixed(2));
+      appendLine('Assessed Value Post Y2 (E19 = D19 + B33)', assessedPostY2.toFixed(2));
+      appendLine(
+        'Assessed Value (mills) Post Y2 (E20 = E19 ÷ 1000)',
+        assessedPostMillY2.toFixed(5)
+      );
+      appendLine(
+        'Estimated Taxes Due to Reval Post Y2 (E23 = E20 × E21)',
+        estTaxDueRevalPostY2.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Post Y2 (E24 = E20 × E22)',
+        estAnnualTaxCouncilPostY2.toFixed(2)
+      );
+
+      // 9) Year 3 (FY 2028) block
+      const year3Header = document.createElement('div');
+      year3Header.className = 'mt-6 font-bold text-lg text-gray-800';
+      year3Header.textContent = 'FY 2028 (Year 3)';
+      resultsEl.appendChild(year3Header);
+
+      appendLine('Assessed Value Y3 (F10 = E10 + B33)', assessedY3.toFixed(2));
+      appendLine('Assessed Value (mills) Y3 (F11 = F10 ÷ 1000)', assessedMillY3.toFixed(5));
+      appendLine('Mill Rate Y3 (F12 = E22)', councilMillY2.toFixed(2));
+      appendLine(
+        'Estimated Annual Taxes Y3 (due to Reval) (F23 = E23 × (1+F2))',
+        estTaxDueRevalY3.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Y3 (F24 = F20 × F22)',
+        estAnnualTaxY3.toFixed(2)
+      );
+      appendLine('Annual Tax Increase Y3 (F26 = F24 − F13)', taxIncreaseY3.toFixed(2));
+      appendLine('Monthly Tax Increase Y3 (F27 = F26 ÷ 12)', monthlyIncreaseY3.toFixed(2));
+      appendLine(
+        'Pct Increase due to Reval Y3 (F29 = F23 ÷ F13 − 1)',
+        (pctIncRevalY3 * 100).toFixed(2) + '%'
+      );
+      appendLine(
+        'Pct Increase (Tax) Y3 (F30 = F26 ÷ F13)',
+        (pctIncTaxY3 * 100).toFixed(2) + '%'
+      );
+      appendLine('Property Value Y3 (F18 = E18)', propertyValueY3.toFixed(2));
+      appendLine('Assessed Value Post Y3 (F19 = E19 + B33)', assessedPostY3.toFixed(2));
+      appendLine(
+        'Assessed Value (mills) Post Y3 (F20 = F19 ÷ 1000)',
+        assessedPostMillY3.toFixed(5)
+      );
+      appendLine(
+        'Estimated Taxes Due to Reval Post Y3 (F23 = E23 × (1+F2))',
+        estTaxDueRevalPostY3.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Post Y3 (F24 = F20 × F22)',
+        estAnnualTaxCouncilPostY3.toFixed(2)
+      );
+
+      // 10) Year 4 (FY 2029) block
+      const year4Header = document.createElement('div');
+      year4Header.className = 'mt-6 font-bold text-lg text-gray-800';
+      year4Header.textContent = 'FY 2029 (Year 4)';
+      resultsEl.appendChild(year4Header);
+
+      appendLine('Assessed Value Y4 (G10 = F10 + B33)', assessedY4.toFixed(2));
+      appendLine('Assessed Value (mills) Y4 (G11 = G10 ÷ 1000)', assessedMillY4.toFixed(5));
+      appendLine('Mill Rate Y4 (G12 = F22)', councilMillY3.toFixed(2));
+      appendLine(
+        'Estimated Annual Taxes Y4 (due to Reval) (G23 = F23 × (1+F2))',
+        estTaxDueRevalY4.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Y4 (G24 = G20 × G22)',
+        estAnnualTaxY4.toFixed(2)
+      );
+      appendLine('Annual Tax Increase Y4 (G26 = G24 − G13)', taxIncreaseY4.toFixed(2));
+      appendLine('Monthly Tax Increase Y4 (G27 = G26 ÷ 12)', monthlyIncreaseY4.toFixed(2));
+      appendLine(
+        'Pct Increase due to Reval Y4 (G29 = G23 ÷ G13 − 1)',
+        (pctIncRevalY4 * 100).toFixed(2) + '%'
+      );
+      appendLine(
+        'Pct Increase (Tax) Y4 (G30 = G26 ÷ G13)',
+        (pctIncTaxY4 * 100).toFixed(2) + '%'
+      );
+      appendLine('Property Value Y4 (G18 = F18)', propertyValueY4.toFixed(2));
+      appendLine('Assessed Value Post Y4 (G19 = F19 + B33)', assessedPostY4.toFixed(2));
+      appendLine(
+        'Assessed Value (mills) Post Y4 (G20 = G19 ÷ 1000)',
+        assessedPostMillY4.toFixed(5)
+      );
+      appendLine(
+        'Estimated Taxes Due to Reval Post Y4 (G23 = F23 × (1+F2))',
+        estTaxDueRevalPostY4.toFixed(2)
+      );
+      appendLine(
+        'Estimated Annual Taxes Council Post Y4 (G24 = G20 × G22)',
+        estAnnualTaxCouncilPostY4.toFixed(2)
+      );
+    });
   </script>
 </body>
 </html>
