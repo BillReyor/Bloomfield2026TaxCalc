@@ -1,0 +1,8 @@
+# Ignore node modules or other dependencies
+node_modules/
+.DS_Store
+*.log
+
+# Dist and built files
+/dist/
+/build/
