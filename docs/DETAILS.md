@@ -1,6 +1,6 @@
 # Calculation Details
 
-The calculator estimates taxes for fiscal years 2026\u20132029. By default it uses the council mill rates stored in the `defaultRates` object at the bottom of `index.html`:
+The calculator estimates taxes for fiscal years 2026–2029. By default it uses the council mill rates stored in the `defaultRates` object at the bottom of `index.html`:
 
 ```javascript
 const defaultRates = {
@@ -16,18 +16,18 @@ const defaultRates = {
 };
 ```
 
-*(see `index.html` lines 330\u2013341).* 
+*(see `index.html` lines 330–341).* 
 
 ## Inputs
 
-- **Current Assessed Value** \u2013 your post-revaluation assessment.
-- **Old Assessed Value** \u2013 optional previous assessment before October 2024.
-- **Revaluation Increase (%)** \u2013 optional percentage used to infer your old value.
-- **Council Mill Rates** \u2013 FY 2026\u20132029 values, overridable in Advanced Configuration.
-- **Equalized Rates** \u2013 comparison mill rates adjusted to full market value
+- **Current Assessed Value** – your post-revaluation assessment.
+- **Old Assessed Value** – optional previous assessment before October 2024.
+- **Revaluation Increase (%)** – optional percentage used to infer your old value.
+- **Council Mill Rates** – FY 2026–2029 values, overridable in Advanced Configuration.
+- **Equalized Rates** – comparison mill rates adjusted to full market value
   (70% to 100%) for cross-town or year-to-year analysis; not used in
   calculations.
-- **Annual Budget Increase** \u2013 projected increase applied to FY 2028 and FY 2029.
+- **Annual Budget Increase** – projected increase applied to FY 2028 and FY 2029.
 The Advanced Configuration panel is hidden when the page loads. Expand it if you need to supply your old value or override any of the default rates.
 
 
@@ -48,7 +48,7 @@ const assessY2 = oldVal + 0.50 * diff;
 const assessY3 = oldVal + 0.75 * diff;
 const assessY4 = postVal;
 ```
-*(see `index.html` lines 474\u2013490).* 
+*(see `index.html` lines 474–490).* 
 
 3. **Compute Annual Taxes**
 
@@ -60,7 +60,7 @@ const taxY2 = millY2 * councilY2;
 const taxY3 = (millY3 * councilY3) * (1 + futureIncrease);
 const taxY4 = (millY4 * councilY4) * (1 + futureIncrease);
 ```
-*(see `index.html` lines 480\u2013489).* 
+*(see `index.html` lines 480–489).* 
 
 4. **Render Output**
 
@@ -69,6 +69,6 @@ const taxY4 = (millY4 * councilY4) * (1 + futureIncrease);
 ```javascript
 resultsEl.innerHTML = html;
 ```
-*(see `index.html` lines 373\u2013436).* 
+*(see `index.html` lines 373–436).* 
 
 These calculations provide an estimate only and may not match your actual tax bill.
