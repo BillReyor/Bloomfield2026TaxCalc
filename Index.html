@@ -4,30 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bloomfield Property Tax Estimator</title>
-  <!-- Tailwind CSS via CDN for styling -->
+  <!-- Tailwind CSS for simple, modern styling -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900">
   <div class="max-w-xl mx-auto p-6">
-    <!-- Title -->
-    <h1 class="text-2xl font-bold text-center mb-4">Bloomfield, CT Property Tax Estimator</h1>
+    <!-- Page Title -->
+    <h1 class="text-2xl font-bold text-center mb-4">
+      Bloomfield, CT Property Tax Estimator
+    </h1>
 
-    <!-- Description -->
+    <!-- Short Intro -->
     <p class="mb-6 text-gray-700">
-      Enter your property’s most recent assessed value and other details to estimate your annual residential property tax in Bloomfield, Connecticut.
-      This assumes you’re already looking at the most up-to-date assessment after any revaluations or phase-ins.
-      <strong>Note:</strong> Assessed value is 70% of market value, per Connecticut law.
+      Enter your property’s assessed values and other details below to see a four‐year projection of your residential tax bill in Bloomfield. 
+      Each estimate reflects the phase-in schedule: 
+      Year 1 (25 % of the revaluation increase), 
+      Year 2 (50 %), 
+      Year 3 (75 %), 
+      and Year 4 (100 % of the new assessed value). 
+      <strong>Note:</strong> Connecticut law sets assessed value at 70 % of market value.
     </p>
 
-    <!-- Input Form -->
+    <!-- Input Form Container -->
     <div class="bg-white shadow-md rounded p-4 mb-4">
-      <!-- Current Assessed Value -->
-      <label for="currentValue" class="block font-medium mb-1">
-        Current Assessed Value
+      <!-- Previous Assessed Value -->
+      <label for="prevValue" class="block font-medium mb-1">
+        Previous Assessed Value (Pre‐Revaluation)
       </label>
       <input
         type="number"
-        id="currentValue"
+        id="prevValue"
+        class="w-full mb-3 p-2 border border-gray-300 rounded"
+        placeholder="e.g. 140000"
+      />
+
+      <!-- Current Assessed Value -->
+      <label for="newValue" class="block font-medium mb-1">
+        Current Assessed Value (Post‐Revaluation)
+      </label>
+      <input
+        type="number"
+        id="newValue"
         class="w-full mb-3 p-2 border border-gray-300 rounded"
         placeholder="e.g. 180000"
       />
@@ -56,7 +73,7 @@
         step="0.01"
       />
 
-      <!-- Total Exemptions/Deductions -->
+      <!-- Exemptions -->
       <label for="exemptions" class="block font-medium mb-1">
         Total Exemptions/Deductions (Assessed Value)
       </label>
@@ -72,59 +89,99 @@
         id="calcBtn"
         class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700"
       >
-        Calculate Tax
+        Calculate Tax by Year
       </button>
     </div>
 
-    <!-- Result Display -->
-    <div id="result" class="text-lg font-medium text-blue-800"></div>
+    <!-- Container for Four‐Year Results -->
+    <div id="resultsContainer" class="space-y-2 text-lg font-medium text-blue-800">
+      <!-- JavaScript will inject four lines here -->
+    </div>
   </div>
 
-  <!-- JavaScript for calculation -->
+  <!-- JavaScript to perform four‐year calculation -->
   <script>
-    // Grab references to each input field and result container
-    const currentInput = document.getElementById('currentValue');
+    // Grab references to each input & result container
+    const prevInput = document.getElementById('prevValue');
+    const newInput = document.getElementById('newValue');
     const townMillInput = document.getElementById('townMill');
     const fireMillInput = document.getElementById('fireMill');
     const exemptionsInput = document.getElementById('exemptions');
-    const resultDiv = document.getElementById('result');
+    const resultsContainer = document.getElementById('resultsContainer');
     const calcBtn = document.getElementById('calcBtn');
 
-    // Provide sensible defaults for mill rates; adjust these as needed each year
-    townMillInput.value = 35.64; // Example town mill rate for FY2026
-    fireMillInput.value = 0;     // Default to 0 unless you know your fire district rate
+    // Set default mill rates (update as needed each year)
+    townMillInput.value = 35.64; // example for FY2026
+    fireMillInput.value = 0;     // default 0 if no separate fire district
 
-    function calculateTax() {
-      // Parse user-entered values
-      const assessedVal = parseFloat(currentInput.value);
+    function calculateFourYears() {
+      // Parse user entries
+      const prevVal = parseFloat(prevInput.value);
+      const newVal = parseFloat(newInput.value);
       const townRate = parseFloat(townMillInput.value) || 0;
       const fireRate = parseFloat(fireMillInput.value) || 0;
       const exemptAmt = parseFloat(exemptionsInput.value) || 0;
 
-      // Validate that the assessed value is a positive number
-      if (isNaN(assessedVal) || assessedVal <= 0) {
-        resultDiv.textContent = 'Please enter a valid assessed value.';
+      // Clear any existing messages
+      resultsContainer.innerHTML = '';
+
+      // Validate that both assessed values are positive and different
+      if (isNaN(prevVal) || prevVal <= 0) {
+        resultsContainer.textContent = 
+          'Please enter a valid previous assessed value.';
+        return;
+      }
+      if (isNaN(newVal) || newVal <= 0) {
+        resultsContainer.textContent = 
+          'Please enter a valid current assessed value.';
+        return;
+      }
+      if (prevVal === newVal) {
+        resultsContainer.textContent = 
+          'Previous and current assessed values must differ for phase-in to apply.';
         return;
       }
 
-      // Subtract exemptions from assessed value (but don’t go below zero)
-      let netAssessed = assessedVal - exemptAmt;
-      if (netAssessed < 0) netAssessed = 0;
+      // Determine the raw increase amount
+      const increase = newVal - prevVal;
 
-      // Compute total mill rate (town + fire district)
+      // We’ll compute Year1 through Year4. Each year uses a fraction of the increase:
+      // Year1 => 25% of increase  (0.25)
+      // Year2 => 50% of increase  (0.50)
+      // Year3 => 75% of increase  (0.75)
+      // Year4 => 100% of increase (1.00)
+      const phaseFractions = [0.25, 0.50, 0.75, 1.00];
+
+      // Combine town mill + fire district mill once
       const totalMillRate = townRate + fireRate;
 
-      // Property tax formula: (net assessed value × total mills) ÷ 1,000
-      const estimatedTax = (netAssessed * totalMillRate) / 1000;
+      // Loop over each year index
+      phaseFractions.forEach((fraction, index) => {
+        // Compute the “effective assessed value” for this year
+        const yearLabel = `Year ${index + 1}`;
+        const effectiveAssessed = prevVal + increase * fraction;
 
-      // Show result, formatted to two decimal places
-      resultDiv.textContent =
-        'Estimated Annual Property Tax: $' + estimatedTax.toFixed(2) +
-        (exemptAmt > 0 ? ' (after exemptions)' : '');
+        // Subtract exemptions (don’t go below zero)
+        let netAssessed = effectiveAssessed - exemptAmt;
+        if (netAssessed < 0) netAssessed = 0;
+
+        // Compute tax: (netAssessed × totalMillRate) / 1000
+        const tax = (netAssessed * totalMillRate) / 1000;
+
+        // Create one line of output
+        const line = document.createElement('div');
+        line.textContent = 
+          `${yearLabel} (phase‐in ${(fraction * 100).toFixed(0)} %): ` +
+          `$${tax.toFixed(2)}` +
+          (exemptAmt > 0 ? ' (after exemptions)' : '');
+
+        // Append to the results container
+        resultsContainer.appendChild(line);
+      });
     }
 
-    // Run calculation when the "Calculate Tax" button is clicked
-    calcBtn.addEventListener('click', calculateTax);
+    // When the button is clicked, run the four‐year calculation
+    calcBtn.addEventListener('click', calculateFourYears);
   </script>
 </body>
 </html>
