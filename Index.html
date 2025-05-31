@@ -21,19 +21,19 @@
       <h2 class="text-xl font-semibold mb-4 border-b pb-2">Assessed Values</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="assessedPre" class="block font-medium mb-1">
-            Previous Assessed Value
+          <label for="taxPre" class="block font-medium mb-1">
+            Current Annual Property Tax
           </label>
           <input
             type="number"
-            id="assessedPre"
+            id="taxPre"
             class="w-full p-2 border border-gray-300 rounded"
-            aria-describedby="assessedPreHelp"
-            placeholder="e.g. 178010"
-            value="178010"
+            aria-describedby="taxPreHelp"
+            placeholder="e.g. 6700"
+            value="6700"
           />
-          <p id="assessedPreHelp" class="mt-1 text-sm text-gray-500">
-            Your property’s assessment before the 2024 revaluation.
+          <p id="taxPreHelp" class="mt-1 text-sm text-gray-500">
+            Your total tax bill before the 2024 revaluation.
           </p>
         </div>
 
@@ -57,6 +57,8 @@
 
       <hr class="my-6" />
 
+      <button id="toggleAdvanced" class="mb-4 text-blue-600 underline">Show Advanced Options</button>
+      <div id="advancedFields" class="hidden">
       <h2 class="text-xl font-semibold mb-4 border-b pb-2">Pre-Revaluation Rates</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
@@ -138,6 +140,8 @@
         </p>
       </div>
 
+      </div> <!-- end advancedFields -->
+
       <button
         id="calculateBtn"
         class="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700 transition"
@@ -176,9 +180,14 @@
       container.insertAdjacentHTML('beforeend', block);
     });
 
+    const advanced = document.getElementById('advancedFields');
+    document.getElementById('toggleAdvanced').addEventListener('click', () => {
+      advanced.classList.toggle('hidden');
+    });
+
     document.getElementById('calculateBtn').addEventListener('click', () => {
       // Parse inputs or default to 0
-      const assessedPre      = parseFloat(document.getElementById('assessedPre').value) || 0;
+      const annualTaxPre     = parseFloat(document.getElementById('taxPre').value) || 0;
       const assessedPost     = parseFloat(document.getElementById('assessedPost').value) || 0;
       const millRatePre      = parseFloat(document.getElementById('millRatePre').value) || 0;
       const equalizedMillPre = parseFloat(document.getElementById('equalizedMillPre').value) || 0;
@@ -189,9 +198,9 @@
       const councilMill   = years.map((_, i) => parseFloat(document.getElementById(`councilMillY${i + 1}`).value) || 0);
 
       // Calculations
+      const assessedMillPre = millRatePre ? annualTaxPre / millRatePre : 0;
+      const assessedPre = assessedMillPre * 1000;
       const propertyValuePre = assessedPre / 0.7;
-      const assessedMillPre = assessedPre / 1000;
-      const annualTaxPre = assessedMillPre * millRatePre;
       const propertyValuePost = assessedPost / 0.7;
       const changeInAssessment = assessedPost - assessedPre;
       const quarterPhase = changeInAssessment / 4;
