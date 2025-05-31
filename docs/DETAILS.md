@@ -1,13 +1,15 @@
 # Calculation Details
 
-The calculator estimates taxes for fiscal years 2026–2029. By default it uses the council mill rates stored in the `defaultRates` object at the bottom of `index.html`:
+The calculator estimates taxes for fiscal years 2025–2029. By default it uses the council mill rates stored in the `defaultRates` object at the bottom of `index.html`:
 
 ```javascript
 const defaultRates = {
+  councilY0: 36.90,
   councilY1: 35.64,
   councilY2: 34.03,
   councilY3: 32.11,
   councilY4: 30.45,
+  equalizedY0: 35.90,
   equalizedY1: 34.27,
   equalizedY2: 31.88,
   equalizedY3: 29.80,
@@ -16,14 +18,14 @@ const defaultRates = {
 };
 ```
 
-*(see `index.html` lines 330–341).* 
+*(see `index.html` lines 370–383).* 
 
 ## Inputs
 
 - **Current Assessed Value** – your post-revaluation assessment.
 - **Old Assessed Value** – optional previous assessment before October 2024.
 - **Revaluation Increase (%)** – optional percentage used to infer your old value.
-- **Council Mill Rates** – FY 2026–2029 values, overridable in Advanced Configuration.
+- **Council Mill Rates** – FY 2025–2029 values, overridable in Advanced Configuration.
 - **Equalized Rates** – comparison mill rates adjusted to full market value
   (70% to 100%) for cross-town or year-to-year analysis; not used in
   calculations.
