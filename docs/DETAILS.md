@@ -4,12 +4,12 @@ The calculator estimates taxes for fiscal years 2025–2029. By default it uses 
 
 ```javascript
 const defaultRates = {
-  councilY0: 36.90,
+  councilY0: 37.49,
   councilY1: 35.64,
   councilY2: 34.03,
   councilY3: 32.11,
   councilY4: 30.45,
-  equalizedY0: 35.90,
+  equalizedY0: 27.97,
   equalizedY1: 34.27,
   equalizedY2: 31.88,
   equalizedY3: 29.80,
