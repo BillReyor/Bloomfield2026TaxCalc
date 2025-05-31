@@ -12,7 +12,6 @@
   />
   <meta name="author" content="Created by William Reyor" />
   <title>Bloomfield Tax Calculator</title>
-  <!-- Tailwind CSS for styling -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -22,22 +21,22 @@
     </h1>
 
     <p class="mb-6 text-gray-700 leading-relaxed">
-      Enter your property’s <strong>post-revaluation assessed value</strong> (effective FY 2026).  
-      To see a correct four-year phase-in, you must also supply **either** your old (pre-October 2024) assessment or your revaluation increase percentage.  
-      Expand “Advanced Configuration” below to enter one of those two values.  
-      <span class="text-red-600 font-semibold">
-        If neither is provided, we cannot accurately calculate the four-year phase-in.
-      </span>
+      Enter your property’s <strong>post-revaluation assessed value</strong> (effective FY 2026), 
+      along with either your <strong>old (pre-reval) assessed value</strong> or your 
+      <strong>Revaluation Increase (%)</strong>. We need one of those two to calculate the four-year phase-in correctly. 
+      If you leave both blank, we cannot produce an accurate phase-in comparison.
     </p>
 
     <!--────────────────────────────────────
-       Simple Input Section
+      Simple Input Section (always visible)
     ────────────────────────────────────-->
-    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-      <h2 class="text-xl font-semibold mb-4 border-b pb-2">Assessed Value (After Revaluation)</h2>
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-6">
+      <h2 class="text-xl font-semibold mb-4 border-b pb-2">Assessed Values</h2>
+
+      <!-- Current (Post-Reval) Assessed Value -->
       <div>
         <label for="assessedPost" class="block font-medium mb-1">
-          Current Assessed Value
+          Current (Post-Revaluation) Assessed Value
         </label>
         <input
           type="number"
@@ -48,38 +47,14 @@
           aria-describedby="assessedPostHelp"
         />
         <p id="assessedPostHelp" class="mt-1 text-sm text-gray-500">
-          Your property’s assessment effective for FY 2026 (after the October 2024 revaluation).
+          Your property’s assessment effective for FY 2026 (after October 2024 revaluation).
         </p>
       </div>
-    </div>
 
-    <!--────────────────────────────────────
-       Advanced Configuration Toggle
-    ────────────────────────────────────-->
-    <button
-      id="toggleAdvanced"
-      aria-expanded="false"
-      aria-controls="advancedConfig"
-      class="mb-6 text-blue-600 hover:text-blue-800 font-medium focus:outline-none"
-    >
-      Advanced Configuration ▼
-    </button>
-
-    <!--────────────────────────────────────
-       Advanced Configuration Section (hidden by default)
-    ────────────────────────────────────-->
-    <div
-      id="advancedConfig"
-      class="hidden transition-all duration-200 bg-white shadow-md rounded-lg p-6 mb-6 space-y-6"
-    >
-      <h2 class="text-xl font-semibold mb-4 border-b pb-2">
-        Advanced Rates & Options
-      </h2>
-
-      <!-- Option A: Old (Pre-Reval) Assessed Value -->
+      <!-- Old (Pre-Reval) Assessed Value -->
       <div>
         <label for="assessedPre" class="block font-medium mb-1">
-          Old (Pre-Reval) Assessed Value
+          Old (Pre-Revaluation) Assessed Value
         </label>
         <input
           type="number"
@@ -96,10 +71,10 @@
 
       <p class="text-center text-gray-600 italic">― or ―</p>
 
-      <!-- Option B: Revaluation Increase Percentage -->
+      <!-- Revaluation Increase Percentage -->
       <div>
         <label for="revalPct" class="block font-medium mb-1">
-          Revaluation Increase (%) 
+          Revaluation Increase (%)
         </label>
         <input
           type="number"
@@ -114,8 +89,30 @@
           (Optional) If your notice says “New assessment is 38% higher,” enter 0.38.
         </p>
       </div>
+    </div>
 
-      <hr />
+    <!--────────────────────────────────────
+      Advanced Configuration Toggle
+    ────────────────────────────────────-->
+    <button
+      id="toggleAdvanced"
+      aria-expanded="false"
+      aria-controls="advancedConfig"
+      class="mb-6 text-blue-600 hover:text-blue-800 font-medium focus:outline-none"
+    >
+      Advanced Configuration ▼
+    </button>
+
+    <!--────────────────────────────────────
+      Advanced Configuration (hidden by default)
+    ────────────────────────────────────-->
+    <div
+      id="advancedConfig"
+      class="hidden transition-all duration-200 bg-white shadow-md rounded-lg p-6 mb-6 space-y-6"
+    >
+      <h2 class="text-xl font-semibold mb-4 border-b pb-2">
+        Advanced Rates & Options
+      </h2>
 
       <!-- Council Mill Rates (FY 2026–FY 2029) -->
       <div>
@@ -135,7 +132,7 @@
               aria-describedby="councilY1Help"
             />
             <p id="councilY1Help" class="mt-1 text-sm text-gray-500">
-              Tax rate (mills) adopted for fiscal year 2026.
+              Town Council’s tax rate (mills) for FY 2026.
             </p>
           </div>
           <div>
@@ -152,7 +149,7 @@
               aria-describedby="councilY2Help"
             />
             <p id="councilY2Help" class="mt-1 text-sm text-gray-500">
-              Tax rate (mills) adopted for fiscal year 2027.
+              Town Council’s tax rate (mills) for FY 2027.
             </p>
           </div>
           <div>
@@ -169,7 +166,7 @@
               aria-describedby="councilY3Help"
             />
             <p id="councilY3Help" class="mt-1 text-sm text-gray-500">
-              Tax rate (mills) adopted for fiscal year 2028.
+              Town Council’s tax rate (mills) for FY 2028.
             </p>
           </div>
           <div>
@@ -186,7 +183,7 @@
               aria-describedby="councilY4Help"
             />
             <p id="councilY4Help" class="mt-1 text-sm text-gray-500">
-              Tax rate (mills) adopted for fiscal year 2029.
+              Town Council’s tax rate (mills) for FY 2029.
             </p>
           </div>
         </div>
@@ -295,7 +292,7 @@
     </div>
 
     <!--────────────────────────────────────
-       Calculate Button
+      Calculate Button
     ────────────────────────────────────-->
     <button
       id="calculateBtn"
@@ -306,7 +303,7 @@
     </button>
 
     <!--────────────────────────────────────
-       Results Section
+      Results Section
     ────────────────────────────────────-->
     <div id="results" class="bg-white shadow-md rounded-lg p-6 space-y-4"></div>
   </div>
@@ -379,37 +376,12 @@
         <div class="text-red-600 font-semibold">
           ⚠️ To see an accurate four-year phase-in, please enter 
           <strong>either</strong> your old (pre-reval) assessment 
-          <em>or</em> your revaluation increase percentage under Advanced Configuration.
+          <em>or</em> your revaluation increase percentage above.
         </div>
       `;
     }
 
-    // Helper: render annual taxes only (no phase-in comparisons)
-    function renderSimple(taxY1, taxY2, taxY3, taxY4) {
-      resultsEl.innerHTML = `
-        <div class="text-lg font-semibold mb-2">Estimated Annual Taxes</div>
-        <div class="grid grid-cols-1 gap-2">
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2026</span>
-            <span class="text-gray-700">$${formatCurrency(taxY1)}</span>
-          </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2027</span>
-            <span class="text-gray-700">$${formatCurrency(taxY2)}</span>
-          </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2028</span>
-            <span class="text-gray-700">$${formatCurrency(taxY3)}</span>
-          </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2029</span>
-            <span class="text-gray-700">$${formatCurrency(taxY4)}</span>
-          </div>
-        </div>
-      `;
-    }
-
-    // Helper: render full phase-in results with year-over-year comparisons
+    // Helper: render the full phase-in results with comparisons
     function renderWithDiff(taxY1, taxY2, taxY3, taxY4) {
       const diffY2 = taxY2 - taxY1;
       const pctY2  = (diffY2 / taxY1) * 100;
@@ -466,16 +438,15 @@
     // Main calculation logic
     calculateBtn.addEventListener('click', () => {
       const postVal = parseFloat(assessedPostInput.value) || 0;
-      const advancedVisible = !advancedConfigDiv.classList.contains('hidden');
 
-      // Always pull in any advanced overrides for council/equalized rates
+      // Always read in any advanced overrides for council/equalized rates
       let {
         councilY1, councilY2, councilY3, councilY4,
         equalizedY1, equalizedY2, equalizedY3, equalizedY4,
         futureIncrease
       } = defaultRates;
 
-      if (advancedVisible) {
+      if (!advancedConfigDiv.classList.contains('hidden')) {
         councilY1      = parseFloat(councilY1Input.value) || councilY1;
         councilY2      = parseFloat(councilY2Input.value) || councilY2;
         councilY3      = parseFloat(councilY3Input.value) || councilY3;
@@ -487,20 +458,18 @@
         futureIncrease = parseFloat(futureBudgetIncreaseInput.value) || futureIncrease;
       }
 
-      // Determine if we have valid oldVal (either from old assessment or from revalPct)
+      // Determine if we have a valid oldVal (either from old assessment or from revalPct)
       let oldVal = NaN;
-      if (advancedVisible) {
-        const preVal   = parseFloat(assessedPreInput.value) || NaN;
-        const revalPct = parseFloat(revalPctInput.value) || NaN;
+      const preVal   = parseFloat(assessedPreInput.value) || NaN;
+      const revalPct = parseFloat(revalPctInput.value) || NaN;
 
-        if (!isNaN(preVal) && preVal > 0) {
-          oldVal = preVal;
-        } else if (!isNaN(revalPct) && revalPct > 0) {
-          oldVal = postVal / (1 + revalPct);
-        }
+      if (!isNaN(preVal) && preVal > 0) {
+        oldVal = preVal;
+      } else if (!isNaN(revalPct) && revalPct > 0) {
+        oldVal = postVal / (1 + revalPct);
       }
 
-      // If we have a valid oldVal, do the 4-year phase-in
+      // If we have a valid oldVal, compute the 4-year phase-in
       if (!isNaN(oldVal) && oldVal > 0) {
         const diff     = postVal - oldVal;
         const assessY1 = oldVal + 0.25 * diff;  // FY 2026
@@ -520,11 +489,10 @@
         const taxY4 = (millY4 * councilY4) * (1 + futureIncrease);
 
         renderWithDiff(taxY1, taxY2, taxY3, taxY4);
-        return;
+      } else {
+        // Otherwise, show the warning only
+        renderWarning();
       }
-
-      // Otherwise (no valid oldVal or revalPct), show ONLY the warning
-      renderWarning();
     });
   </script>
 </body>
