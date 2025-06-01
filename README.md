@@ -2,7 +2,7 @@
 
 This repository contains a single-page calculator for estimating residential property taxes in the Town of Bloomfield for fiscal years 2025&ndash;2029. It is written entirely in HTML and JavaScript.
 
-Default mill rates for each fiscal year are defined near the bottom of `index.html`. Open the "Advanced Configuration" panel (collapsed on load) to override them or enter your old assessment or revaluation percentage. The panel also lists **equalized** rates so you can compare mill rates on a full-value basis across years or towns.
+Default mill rates for each fiscal year are defined near the bottom of `index.html`. Open the **Advanced Configuration** panel (collapsed on load) to override them or enter your old assessment or revaluation percentage. The panel also lists **equalized** rates, which show the revenue-neutral mill for each phase of the revaluation.
 
 ## Getting Started
 
