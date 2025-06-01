@@ -1,9 +1,9 @@
 # Calculation Details
 
 This calculator models Bloomfield's four-year phase-in of the 2024 property revaluation.
-Equalized mill rates come from the town's spreadsheet and show the revenue-neutral
-baseline for each phase-in level. The council's adopted mill rates already include any
-budget changes and are the figures actually used to compute taxes.
+Equalized mill rates show the revenue-neutral baseline for each phase-in level.
+The council's adopted mill rates already include any budget changes and are the
+figures actually used to compute taxes.
 
 ```javascript
 const defaultRates = {
