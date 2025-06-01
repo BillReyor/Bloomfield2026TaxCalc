@@ -2,39 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta 
-    name="description" 
-    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (four-year phase-in with correct council mills)" 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0" 
+  />
+  <meta
+    name="description"
+    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (four-year phase-in with equalized mill baseline)"
   />
   <meta name="author" content="Created by William Reyor" />
-  <title>Bloomfield Tax Calculator v1.0.2</title>
-  <!-- Tailwind CSS via CDN -->
+  <title>Bloomfield Tax Calculator v1.0</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Simple style override so version text is a bit smaller and muted */
-    .version-tag {
-      font-size: 0.875rem;
-      color: #6b7280; /* tailwind-gray-500 */
-    }
-  </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
   <div class="max-w-3xl mx-auto py-8 px-4">
+    <h1 class="text-3xl font-bold text-center mb-6">
+      Bloomfield Tax Calculator (FY 2025 – FY 2029) v1.0
+    </h1>
 
-    <!-- Header + Version -->
-    <div class="text-center mb-6">
-      <h1 class="text-3xl font-bold">Bloomfield Tax Calculator (FY 2025–FY 2029)</h1>
-      <p class="version-tag mt-1">Version 1.0.2</p>
-    </div>
-
-    <!-- Intro Paragraph -->
     <p class="mb-6 text-gray-700 leading-relaxed">
-      Enter your property’s <strong>post-revaluation assessed value</strong> (effective FY 2026).  
-      Then fill in either your <strong>old (pre-reval) assessed value</strong> (from your FY 2025 bill)  
-      <em>or</em> your <strong>Revaluation Increase (%)</strong> (decimal form, e.g. 0.55 for 55 %).  
-      We need one of those two to perform the four-year phase-in correctly.  
-      If both are blank, we cannot generate an accurate comparison.
+      Enter your property’s <strong>post-revaluation assessed value</strong> (effective FY 2026), 
+      along with either your <strong>old (pre-reval) assessed value</strong> or your 
+      <strong>Revaluation Increase (%)</strong>. We need one of those two to calculate the four-year phase-in correctly. 
+      If both are left blank, we can’t produce an accurate phase-in comparison.
     </p>
 
     <!--────────────────────────────────────
@@ -52,8 +42,8 @@
           type="number"
           id="assessedPost"
           class="w-full p-2 border border-gray-300 rounded"
-          placeholder="e.g. 262710"
-          value="262710"
+          placeholder="e.g. 244000"
+          value="244000"
           aria-describedby="assessedPostHelp"
         />
         <p id="assessedPostHelp" class="mt-1 text-sm text-gray-500">
@@ -91,12 +81,12 @@
           id="revalPct"
           step="0.001"
           class="w-full p-2 border border-gray-300 rounded"
-          placeholder="e.g. 0.55 for 55 %"
+          placeholder="e.g. 0.55 for 55%"
           value=""
           aria-describedby="revalPctHelp"
         />
         <p id="revalPctHelp" class="mt-1 text-sm text-gray-500">
-          (Optional) If your FY 2026 notice says “New assessment is 55 % higher,” enter <strong>0.55</strong>.
+          (Optional) If your notice says “New assessment is 55% higher,” enter 0.55.
         </p>
       </div>
     </div>
@@ -121,10 +111,10 @@
       class="hidden transition-all duration-200 bg-white shadow-md rounded-lg p-6 mb-6 space-y-6"
     >
       <h2 class="text-xl font-semibold mb-4 border-b pb-2">
-        Advanced Rates &amp; Options
+        Advanced Rates & Options
       </h2>
 
-      <!-- Council Mill Rates (FY 2025–FY 2029) -->
+      <!-- Council Mill Rates (FY 2025 – FY 2029) -->
       <div>
         <h3 class="text-lg font-semibold mb-2">Council Mill Rates</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -171,8 +161,8 @@
               id="councilY2"
               step="0.01"
               class="w-full p-2 border border-gray-300 rounded"
-              placeholder="e.g. 34.03"
-              value="34.03"
+              placeholder="e.g. 34.15"
+              value="34.15"
               aria-describedby="councilY2Help"
             />
             <p id="councilY2Help" class="mt-1 text-sm text-gray-500">
@@ -188,8 +178,8 @@
               id="councilY3"
               step="0.01"
               class="w-full p-2 border border-gray-300 rounded"
-              placeholder="e.g. 32.11"
-              value="32.11"
+              placeholder="e.g. 32.88"
+              value="32.88"
               aria-describedby="councilY3Help"
             />
             <p id="councilY3Help" class="mt-1 text-sm text-gray-500">
@@ -205,8 +195,8 @@
               id="councilY4"
               step="0.01"
               class="w-full p-2 border border-gray-300 rounded"
-              placeholder="e.g. 30.45"
-              value="30.45"
+              placeholder="e.g. 31.79"
+              value="31.79"
               aria-describedby="councilY4Help"
             />
             <p id="councilY4Help" class="mt-1 text-sm text-gray-500">
@@ -218,12 +208,11 @@
 
       <hr />
 
-      <!-- Equalized Mill Rates (FY 2025–FY 2029) -->
+      <!-- Equalized Mill Rates (FY 2025 – FY 2029) -->
       <div>
         <h3 class="text-lg font-semibold mb-2">Equalized Mill Rates</h3>
         <p class="mb-4 text-sm text-gray-500">
-          (Informational only) These equalized rates show the revenue-neutral mill rate if every property were already revalued at that phase-in level.  
-          We do <em>not</em> use equalized rates to calculate your actual tax bill—your actual annual tax uses the Council Mill above.
+          Shows the revenue-neutral rate for each phase-in level as if all properties were already assessed at that percentage of market value (Connecticut uses 70%). Add the Town Council’s budget increase on top of these equalized rates to arrive at the actual mill rate each year.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -321,19 +310,19 @@
         <h3 class="text-lg font-semibold mb-2">Annual Budget Increase</h3>
         <div>
           <label for="futureBudgetIncrease" class="block font-medium mb-1">
-            Projected Increase Rate (Decimal)
+            Projected Increase Rate
           </label>
           <input
             type="number"
             id="futureBudgetIncrease"
             step="0.001"
             class="w-full p-2 border border-gray-300 rounded"
-            placeholder="e.g. 0.03 for 3 %"
+            placeholder="e.g. 0.03"
             value="0.03"
             aria-describedby="futureBudgetIncreaseHelp"
           />
           <p id="futureBudgetIncreaseHelp" class="mt-1 text-sm text-gray-500">
-            Enter as decimal (e.g. 0.03 =&nbsp;3 %) for the Council Mill growth in FY 2028 &amp; FY 2029.
+            Enter as decimal (0.03 = 3 %) for FY 2028 & FY 2029.
           </p>
         </div>
       </div>
@@ -357,8 +346,7 @@
   </div>
 
   <script>
-    // ────────────────────────────────────────────────────────────
-    // Cache DOM elements
+    // Cache DOM references
     const assessedPostInput         = document.getElementById('assessedPost');
     const assessedPreInput          = document.getElementById('assessedPre');
     const revalPctInput             = document.getElementById('revalPct');
@@ -378,23 +366,27 @@
     const calculateBtn              = document.getElementById('calculateBtn');
     const resultsEl                 = document.getElementById('results');
 
-    // ────────────────────────────────────────────────────────────
-    // Default rates for FY 2025–FY 2029 (Council & Equalized)
+    // Default rates for FY 2025–FY 2029 (matched exactly to the spreadsheet)
     const defaultRates = {
-      councilY0:      37.49,
-      councilY1:      35.64,
-      councilY2:      34.03,
-      councilY3:      32.11,
-      councilY4:      30.45,
-      equalizedY0:    27.97,
-      equalizedY1:    34.27,
-      equalizedY2:    31.88,
-      equalizedY3:    29.80,
-      equalizedY4:    27.97,
+      // Council mill rates (Exactly as your sheet shows)
+      councilY0:   37.49,   // FY 2025
+      councilY1:   35.64,   // FY 2026
+      councilY2:   34.15,   // FY 2027
+      councilY3:   32.88,   // FY 2028
+      councilY4:   31.79,   // FY 2029
+
+      // Equalized rates (also from your sheet’s “After Revaluation” block)
+      equalizedY0: 27.97,   // FY 2025 revenue-neutral
+      equalizedY1: 34.27,   // FY 2026 revenue-neutral
+      equalizedY2: 31.88,   // FY 2027 revenue-neutral
+      equalizedY3: 29.80,   // FY 2028 revenue-neutral
+      equalizedY4: 27.97,   // FY 2029 revenue-neutral
+
+      // Future budget increase (3 percent)
       futureIncrease: 0.03
     };
 
-    // Enable/disable “Calculate” button based on a valid post-reval input
+    // Enable/disable “Calculate” button based on valid post-reval input
     function validateInput() {
       const val = parseFloat(assessedPostInput.value);
       calculateBtn.disabled = isNaN(val) || val <= 0;
@@ -402,7 +394,7 @@
     assessedPostInput.addEventListener('input', validateInput);
     validateInput(); // initial check on page load
 
-    // Toggle Advanced Configuration visibility (update ARIA, text, etc.)
+    // Toggle advanced configuration visibility (with ARIA updates)
     toggleAdvancedBtn.addEventListener('click', () => {
       const isHidden = advancedConfigDiv.classList.contains('hidden');
       if (isHidden) {
@@ -416,7 +408,7 @@
       }
     });
 
-    // Helper: format a number as US dollars with commas and two decimals
+    // Helper: format currency with commas and two decimals
     function formatCurrency(num) {
       return Number(num.toFixed(2)).toLocaleString('en-US', {
         minimumFractionDigits: 2,
@@ -424,24 +416,27 @@
       });
     }
 
-    // Helper: show a warning if neither “oldVal” nor “revalPct” is provided
+    // Helper: render a warning when phase-in data is missing
     function renderWarning() {
       resultsEl.innerHTML = `
         <div class="text-red-600 font-semibold">
-          ⚠️ To generate a correct four-year phase-in, please enter 
+          ⚠️ To see an accurate four-year phase-in, please enter 
           <strong>either</strong> your old (pre-reval) assessment 
           <em>or</em> your revaluation increase percentage above.
         </div>
       `;
     }
 
-    // Helper: render the five-year table + year-over-year changes
+    // Helper: render the full phase-in results with comparisons
     function renderWithDiff(taxY0, taxY1, taxY2, taxY3, taxY4) {
-      // Compute differences and percent changes
-      const diffY1 = taxY1 - taxY0, pctY1 = (diffY1 / taxY0) * 100;
-      const diffY2 = taxY2 - taxY1, pctY2 = (diffY2 / taxY1) * 100;
-      const diffY3 = taxY3 - taxY2, pctY3 = (diffY3 / taxY2) * 100;
-      const diffY4 = taxY4 - taxY3, pctY4 = (diffY4 / taxY3) * 100;
+      const diffY1 = taxY1 - taxY0;
+      const pctY1  = (diffY1 / taxY0) * 100;
+      const diffY2 = taxY2 - taxY1;
+      const pctY2  = (diffY2 / taxY1) * 100;
+      const diffY3 = taxY3 - taxY2;
+      const pctY3  = (diffY3 / taxY2) * 100;
+      const diffY4 = taxY4 - taxY3;
+      const pctY4  = (diffY4 / taxY3) * 100;
 
       resultsEl.innerHTML = `
         <div class="text-lg font-semibold mb-2">Estimated Annual Taxes</div>
@@ -498,12 +493,11 @@
       `;
     }
 
-    // ────────────────────────────────────────────────────────────
-    // Main calculation logic (runs when “Calculate My Taxes” is clicked)
+    // Main calculation logic
     calculateBtn.addEventListener('click', () => {
       const postVal = parseFloat(assessedPostInput.value) || 0;
 
-      // 1) Read defaults or advanced overrides for council & equalized
+      // Always read in any advanced overrides for council/equalized rates
       let {
         councilY0, councilY1, councilY2, councilY3, councilY4,
         equalizedY0, equalizedY1, equalizedY2, equalizedY3, equalizedY4,
@@ -524,7 +518,7 @@
         futureIncrease = parseFloat(futureBudgetIncreaseInput.value) || futureIncrease;
       }
 
-      // 2) Determine “oldVal” (either from the old assessment or from revalPct)
+      // Determine oldVal from either “Old (Pre-Reval)” or “Reval %”
       let oldVal = NaN;
       const preVal   = parseFloat(assessedPreInput.value) || NaN;
       const revalPct = parseFloat(revalPctInput.value) || NaN;
@@ -535,45 +529,64 @@
         oldVal = postVal / (1 + revalPct);
       }
 
-      // 3) If we don’t have a valid oldVal, show a warning and stop
+      // If oldVal is missing or invalid, show warning and exit
       if (isNaN(oldVal) || oldVal <= 0) {
         renderWarning();
         return;
       }
 
-      // 4) Compute the five phased-in assessed values:
-      //    • FY 2025 = oldVal  
-      //    • FY 2026 = oldVal + 0.25 × (postVal – oldVal)  
-      //    • FY 2027 = oldVal + 0.50 × (postVal – oldVal)  
-      //    • FY 2028 = oldVal + 0.75 × (postVal – oldVal)  
-      //    • FY 2029 = postVal
+      // 1) Compute the 5 phased-in assessed values:
+      //    Y0 = FY 2025 = oldVal
+      //    Y1 = FY 2026 = oldVal + 0.25*(postVal − oldVal)
+      //    Y2 = FY 2027 = oldVal + 0.50*(postVal − oldVal)
+      //    Y3 = FY 2028 = oldVal + 0.75*(postVal − oldVal)
+      //    Y4 = FY 2029 = postVal
       const diff     = postVal - oldVal;
-      const assessY0 = oldVal;                   // FY 2025
-      const assessY1 = oldVal + 0.25 * diff;      // FY 2026
-      const assessY2 = oldVal + 0.50 * diff;      // FY 2027
-      const assessY3 = oldVal + 0.75 * diff;      // FY 2028
-      const assessY4 = postVal;                  // FY 2029
+      const assessY0 = oldVal;                  // FY 2025
+      const assessY1 = oldVal + 0.25 * diff;     // FY 2026
+      const assessY2 = oldVal + 0.50 * diff;     // FY 2027
+      const assessY3 = oldVal + 0.75 * diff;     // FY 2028
+      const assessY4 = postVal;                 // FY 2029
 
-      // 5) Convert each to “mills” (divide by 1000)
+      // 2) Convert each to “mills” (÷ 1000)
       const millY0 = assessY0 / 1000;
       const millY1 = assessY1 / 1000;
       const millY2 = assessY2 / 1000;
       const millY3 = assessY3 / 1000;
       const millY4 = assessY4 / 1000;
 
-      // 6) Calculate the actual dollar‐amount tax for each FY:
-      //    • FY 2025:   millY0 × councilY0  
-      //    • FY 2026:   millY1 × councilY1  
-      //    • FY 2027:   millY2 × councilY2  
-      //    • FY 2028:   (millY3 × councilY3) × (1 + futureIncrease)  
-      //    • FY 2029:   (millY4 × councilY4) × (1 + futureIncrease)
-      const taxY0 = millY0 * councilY0;
-      const taxY1 = millY1 * councilY1;
-      const taxY2 = millY2 * councilY2;
-      const taxY3 = (millY3 * councilY3) * (1 + futureIncrease);
-      const taxY4 = (millY4 * councilY4) * (1 + futureIncrease);
+      // 3) Tax calculation:
+      //    Each year begins with the equalized mill rate for that phase-in.
+      //    After applying the Town Council’s budget increase for FY 2028/29, 
+      //    that becomes the actual mill rate used for taxes.
+      function taxForYear(millUnits, yearIdx) {
+        switch (yearIdx) {
+          case 0: 
+            // FY 2025 uses equalizedY0 (revenue-neutral baseline)
+            return millUnits * equalizedY0;
+          case 1: 
+            // FY 2026 uses equalizedY1
+            return millUnits * equalizedY1;
+          case 2: 
+            // FY 2027 uses equalizedY2
+            return millUnits * equalizedY2;
+          case 3: 
+            // FY 2028 uses CouncilY3 plus budget increase
+            return (millUnits * councilY3) * (1 + futureIncrease);
+          case 4: 
+            // FY 2029 uses CouncilY4 plus budget increase
+            return (millUnits * councilY4) * (1 + futureIncrease);
+        }
+      }
 
-      // 7) Render the five FY results + year-over-year comparisons
+      // Compute taxes for each fiscal year
+      const taxY0 = taxForYear(millY0, 0);
+      const taxY1 = taxForYear(millY1, 1);
+      const taxY2 = taxForYear(millY2, 2);
+      const taxY3 = taxForYear(millY3, 3);
+      const taxY4 = taxForYear(millY4, 4);
+
+      // 4) Render the results table
       renderWithDiff(taxY0, taxY1, taxY2, taxY3, taxY4);
     });
   </script>
