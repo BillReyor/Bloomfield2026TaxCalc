@@ -8,7 +8,7 @@
   />
   <meta
     name="description"
-    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (four-year phase-in with equalized mill baseline)"
+    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (four-year phase-in of market value → 70% to get assessed) "
   />
   <meta name="author" content="Created by William Reyor" />
   <title>Bloomfield Tax Calculator</title>
@@ -21,10 +21,12 @@
     </h1>
 
     <p class="mb-6 text-gray-700 leading-relaxed">
-      Enter your property’s <strong>post-revaluation assessed value</strong> (effective FY 2026), 
-      along with either your <strong>old (pre-reval) assessed value</strong> or your 
-      <strong>Revaluation Increase (%)</strong>. We need one of those to calculate the four-year phase-in correctly. 
-      If you leave both blank, we cannot produce an accurate phase-in comparison.
+      Enter your property’s <strong>post-revaluation assessed value</strong> 
+      (effective FY 2026), along with either your 
+      <strong>old (pre-reval) assessed value</strong> or your 
+      <strong>Revaluation Increase (%)</strong>. We need one of those to compute the 
+      four-year phase-in on market (property) value first. If you leave both blank, 
+      we cannot produce an accurate phase-in comparison.
     </p>
 
     <!--────────────────────────────────────
@@ -212,8 +214,8 @@
       <div>
         <h3 class="text-lg font-semibold mb-2">Equalized Mill Rates</h3>
         <p class="mb-4 text-sm text-gray-500">
-          Shows the revenue-neutral rate for each phase-in level as if all properties were already assessed at that percentage of market value (Connecticut uses 70%).
-          Add the Town Council’s budget increase to these equalized rates to arrive at the actual mill rate each year.
+          These “equalized” rates assume all properties are fully at 70% of market. 
+          We use these for FY 2025–FY 2027. Starting in FY 2028, we switch to the Council’s mill (plus budget increase).
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -323,7 +325,7 @@
             aria-describedby="futureBudgetIncreaseHelp"
           />
           <p id="futureBudgetIncreaseHelp" class="mt-1 text-sm text-gray-500">
-            Enter as decimal (0.03 = 3 %) for FY 2028 & FY 2029.
+            Enter as decimal (0.03 = 3%) for FY 2028 & FY 2029.
           </p>
         </div>
       </div>
@@ -491,9 +493,9 @@
 
     // Main calculation logic
     calculateBtn.addEventListener('click', () => {
-      const postVal = parseFloat(assessedPostInput.value) || 0;
+      const postAssessed = parseFloat(assessedPostInput.value) || 0;
 
-      // Always read in any advanced overrides for council/equalized rates
+      // Pull in any advanced overrides for council/equalized rates
       let {
         councilY0, councilY1, councilY2, councilY3, councilY4,
         equalizedY0, equalizedY1, equalizedY2, equalizedY3, equalizedY4,
@@ -515,75 +517,90 @@
       }
 
       // Determine oldVal from either “Old (Pre-Reval)” or “Reval %”
-      let oldVal = NaN;
-      const preVal   = parseFloat(assessedPreInput.value) || NaN;
-      const revalPct = parseFloat(revalPctInput.value) || NaN;
+      let oldAssessed = NaN;
+      const maybePre   = parseFloat(assessedPreInput.value) || NaN;
+      const maybePct   = parseFloat(revalPctInput.value) || NaN;
 
-      if (!isNaN(preVal) && preVal > 0) {
-        oldVal = preVal;
-      } else if (!isNaN(revalPct) && revalPct > 0) {
-        oldVal = postVal / (1 + revalPct);
+      if (!isNaN(maybePre) && maybePre > 0) {
+        oldAssessed = maybePre;
+      } else if (!isNaN(maybePct) && maybePct > 0) {
+        // If user gave only a % increase, infer oldAssessed = newAssessed ÷ (1 + %)
+        oldAssessed = postAssessed / (1 + maybePct);
       }
 
-      // If oldVal is missing or invalid, show warning and exit
-      if (isNaN(oldVal) || oldVal <= 0) {
+      // If oldAssessed is still invalid, show a warning and bail out
+      if (isNaN(oldAssessed) || oldAssessed <= 0) {
         renderWarning();
         return;
       }
 
-      // 1) Compute the 5 phased-in assessed values:
-      //    Y0 = FY 2025 = oldVal
-      //    Y1 = FY 2026 = oldVal + 0.25*(postVal − oldVal)
-      //    Y2 = FY 2027 = oldVal + 0.50*(postVal − oldVal)
-      //    Y3 = FY 2028 = oldVal + 0.75*(postVal − oldVal)
-      //    Y4 = FY 2029 = postVal
-      const diff     = postVal - oldVal;
-      const assessY0 = oldVal;                  // FY 2025
-      const assessY1 = oldVal + 0.25 * diff;     // FY 2026
-      const assessY2 = oldVal + 0.50 * diff;     // FY 2027
-      const assessY3 = oldVal + 0.75 * diff;     // FY 2028
-      const assessY4 = postVal;                 // FY 2029
+      // ── PHASE **MARKET (PROPERTY) VALUE** over 4 years ──
+      //  (1) Convert both old/new assessed ➝ old/new property by ÷ 0.7
+      const oldProperty = oldAssessed / 0.7;
+      const newProperty = postAssessed / 0.7;
 
-      // 2) Convert each to “mills” (÷ 1000)
+      //  (2) Phase the PROPERTY value 25% each year:
+      //      Y0= FY 2025 = oldProperty
+      //      Y1= FY 2026 = oldProperty + .25 * (newProperty - oldProperty)
+      //      Y2= FY 2027 = oldProperty + .50 * (newProperty - oldProperty)
+      //      Y3= FY 2028 = oldProperty + .75 * (newProperty - oldProperty)
+      //      Y4= FY 2029 = newProperty
+      const deltaProp = newProperty - oldProperty;
+      const propY0    = oldProperty;                   // FY 2025
+      const propY1    = oldProperty + 0.25 * deltaProp; // FY 2026
+      const propY2    = oldProperty + 0.50 * deltaProp; // FY 2027
+      const propY3    = oldProperty + 0.75 * deltaProp; // FY 2028
+      const propY4    = newProperty;                   // FY 2029
+
+      //  (3) Convert each phased PROPERTY ➝ assessed = 70% of phased property
+      const assessY0 = propY0 * 0.7;
+      const assessY1 = propY1 * 0.7;
+      const assessY2 = propY2 * 0.7;
+      const assessY3 = propY3 * 0.7;
+      const assessY4 = propY4 * 0.7;
+
+      //  (4) Convert assessed ➝ “mills” by dividing by 1000
       const millY0 = assessY0 / 1000;
       const millY1 = assessY1 / 1000;
       const millY2 = assessY2 / 1000;
       const millY3 = assessY3 / 1000;
       const millY4 = assessY4 / 1000;
 
-      // 3) Tax calculation:
-      //    Each year begins with the equalized mill rate for that phase-in
-      //    level. After applying the Town Council’s budget increase, that
-      //    becomes the actual mill rate used for taxes.
+      // ── TAX CALCULATION ──
+      // For FY 2025–FY 2027: Start with the **equalized** mill each year.
+      // Then that becomes the baseline “actual” mill when the Council’s budget change is baked in.
+      // For FY 2028 & FY 2029: we simply use the Council mill for that year,
+      // then multiply by (1 + futureIncrease).
+
       function taxForYear(millUnits, yearIdx) {
         if (yearIdx === 0) {
-          // FY 2025: equalizedY0
+          // FY 2025 uses equalizedY0
           return millUnits * equalizedY0;
         }
         if (yearIdx === 1) {
-          // FY 2026: equalizedY1
+          // FY 2026 uses equalizedY1
           return millUnits * equalizedY1;
         }
         if (yearIdx === 2) {
-          // FY 2027: equalizedY2
+          // FY 2027 uses equalizedY2
           return millUnits * equalizedY2;
         }
         if (yearIdx === 3) {
-          // FY 2028: councilY3, then budget increase
+          // FY 2028 uses councilY3, then budget increase
           return (millUnits * councilY3) * (1 + futureIncrease);
         }
         // yearIdx === 4 → FY 2029
         return (millUnits * councilY4) * (1 + futureIncrease);
       }
 
-      // Compute taxes for each fiscal year
-      const taxY0 = taxForYear(millY0, 0);
-      const taxY1 = taxForYear(millY1, 1);
-      const taxY2 = taxForYear(millY2, 2);
-      const taxY3 = taxForYear(millY3, 3);
-      const taxY4 = taxForYear(millY4, 4);
+      // Compute each year’s tax:
+      const taxY0 = taxForYear(millY0, 0); // FY 2025
+      const taxY1 = taxForYear(millY1, 1); // FY 2026
+      const taxY2 = taxForYear(millY2, 2); // FY 2027
+      const taxY3 = taxForYear(millY3, 3); // FY 2028
+      const taxY4 = taxForYear(millY4, 4); // FY 2029
 
-      // 4) Render the results table
+      // Render the final table of numbers
       renderWithDiff(taxY0, taxY1, taxY2, taxY3, taxY4);
     });
   </script>
