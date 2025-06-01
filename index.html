@@ -176,7 +176,7 @@
               aria-describedby="councilY2Help"
             />
             <p id="councilY2Help" class="mt-1 text-sm text-gray-500">
-              Town Council’s adopted rate (mills) for FY 2027.
+              Town Council’s estimated adopted rate (mills) based on 3% budget growth for FY 2027.
             </p>
           </div>
           <div>
@@ -193,7 +193,7 @@
               aria-describedby="councilY3Help"
             />
             <p id="councilY3Help" class="mt-1 text-sm text-gray-500">
-              Town Council’s adopted rate (mills) for FY 2028.
+              Town Council’s estimated adopted rate (mills) based on 3% budget growth for FY 2028.
             </p>
           </div>
           <div>
@@ -210,7 +210,7 @@
               aria-describedby="councilY4Help"
             />
             <p id="councilY4Help" class="mt-1 text-sm text-gray-500">
-              Town Council’s adopted rate (mills) for FY 2029.
+              Town Council’s estimated adopted rate (mills) based on 3% budget growth for FY 2029.
             </p>
           </div>
         </div>
@@ -218,7 +218,7 @@
 
       <hr />
 
-      <!-- Equalized Mill Rates (FY 2025–FY 2029) -->
+      <!-- Equalized Mill Rates (FY 2026–FY 2029) -->
       <div>
         <h3 class="text-lg font-semibold mb-2">Equalized Mill Rates</h3>
         <p class="mb-4 text-sm text-gray-500">
@@ -227,23 +227,6 @@
           We no longer multiply by these—your Council rates already incorporate any budget changes.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="equalizedY0" class="block font-medium mb-1">
-              Equalized Rate (FY 2025)
-            </label>
-            <input
-              type="number"
-              id="equalizedY0"
-              step="0.01"
-              class="w-full p-2 border border-gray-300 rounded"
-              placeholder="e.g. 27.97"
-              value="27.97"
-              aria-describedby="equalizedY0Help"
-            />
-            <p id="equalizedY0Help" class="mt-1 text-sm text-gray-500">
-              Pure, fully phased-in comparison rate (not used directly in taxes).
-            </p>
-          </div>
           <div>
             <label for="equalizedY1" class="block font-medium mb-1">
               Equalized Rate (FY 2026)
@@ -348,7 +331,6 @@
     const councilY2Input            = document.getElementById('councilY2');
     const councilY3Input            = document.getElementById('councilY3');
     const councilY4Input            = document.getElementById('councilY4');
-    const equalizedY0Input          = document.getElementById('equalizedY0');
     const equalizedY1Input          = document.getElementById('equalizedY1');
     const equalizedY2Input          = document.getElementById('equalizedY2');
     const equalizedY3Input          = document.getElementById('equalizedY3');
@@ -366,7 +348,6 @@
       councilY2:      34.15,   // FY 2027
       councilY3:      32.88,   // FY 2028
       councilY4:      31.79,   // FY 2029
-      equalizedY0:    27.97,   // purely informational
       equalizedY1:    34.27,   // purely informational
       equalizedY2:    31.88,   // purely informational
       equalizedY3:    29.80,   // purely informational
@@ -485,10 +466,9 @@
       // Read the full post-reval value
       const postVal = parseFloat(assessedPostInput.value) || 0;
 
-      // Start with the default council/​equalized rates, then override if “Advanced” is open
       let {
         councilY0, councilY1, councilY2, councilY3, councilY4,
-        equalizedY0, equalizedY1, equalizedY2, equalizedY3, equalizedY4
+        equalizedY1, equalizedY2, equalizedY3, equalizedY4
       } = defaultRates;
 
       if (!advancedConfigDiv.classList.contains('hidden')) {
@@ -497,7 +477,6 @@
         councilY2      = parseFloat(councilY2Input.value) || councilY2;
         councilY3      = parseFloat(councilY3Input.value) || councilY3;
         councilY4      = parseFloat(councilY4Input.value) || councilY4;
-        equalizedY0    = parseFloat(equalizedY0Input.value) || equalizedY0;
         equalizedY1    = parseFloat(equalizedY1Input.value) || equalizedY1;
         equalizedY2    = parseFloat(equalizedY2Input.value) || equalizedY2;
         equalizedY3    = parseFloat(equalizedY3Input.value) || equalizedY3;

@@ -12,7 +12,6 @@ const defaultRates = {
   councilY2: 34.15, // FY 2027
   councilY3: 32.88, // FY 2028
   councilY4: 31.79, // FY 2029
-  equalizedY0: 27.97, // informational
   equalizedY1: 34.27, // informational
   equalizedY2: 31.88, // informational
   equalizedY3: 29.80, // informational
@@ -28,7 +27,7 @@ These defaults are defined in the embedded script near the bottom of `index.html
 - **Old Assessed Value** – previous assessment before October 2024 (optional).
 - **Revaluation Increase (%)** – percent increase used to infer your old value (optional).
 - **Council Mill Rates** – FY 2025–2029 rates; overridable in Advanced Configuration.
-- **Equalized Rates** – revenue-neutral rates for each phase of the revaluation.
+- **Equalized Rates** – revenue-neutral rates for FY 2026–2029 (four phases of the revaluation).
 
 ## Calculation Steps
 
