@@ -8,7 +8,7 @@
   />
   <meta 
     name="description" 
-    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (correct 4-year phase-in)"
+    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (correct 4-year phase-in)" 
   />
   <meta name="author" content="Created by William Reyor" />
   <title>Bloomfield Tax Calculator</title>
@@ -212,8 +212,8 @@
       <div>
         <h3 class="text-lg font-semibold mb-2">Equalized Mill Rates</h3>
         <p class="mb-4 text-sm text-gray-500">
-          Shows what the rate would be if assessments reflected full market
-          value (CT uses 70%), helpful for year-to-year or town comparisons.
+          Shows what the rate would be if assessments reflected full market value (CT uses 70%). 
+          Helpful for year-to-year or town comparisons, but not used in the phase-in calculation.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -367,7 +367,7 @@
     const calculateBtn              = document.getElementById('calculateBtn');
     const resultsEl                 = document.getElementById('results');
 
-    // Default rate values for FY 2025–FY 2029
+    // Default rates for FY 2025–FY 2029
     const defaultRates = {
       councilY0:      37.49,
       councilY1:      35.64,
@@ -525,14 +525,14 @@
         oldVal = postVal / (1 + revalPct);
       }
 
-      // If we have a valid oldVal, compute the 4-year phase-in plus FY 2025
+      // If we have a valid oldVal, compute the 5-year sequence (FY 2025–FY 2029)
       if (!isNaN(oldVal) && oldVal > 0) {
         const diff     = postVal - oldVal;
-        const assessY0 = oldVal;              // FY 2025
-        const assessY1 = oldVal + 0.25 * diff;  // FY 2026
-        const assessY2 = oldVal + 0.50 * diff;  // FY 2027
-        const assessY3 = oldVal + 0.75 * diff;  // FY 2028
-        const assessY4 = postVal;              // FY 2029
+        const assessY0 = oldVal;                  // FY 2025
+        const assessY1 = oldVal + 0.25 * diff;     // FY 2026
+        const assessY2 = oldVal + 0.50 * diff;     // FY 2027
+        const assessY3 = oldVal + 0.75 * diff;     // FY 2028
+        const assessY4 = postVal;                 // FY 2029
 
         const millY0 = assessY0 / 1000;
         const millY1 = assessY1 / 1000;
@@ -540,7 +540,7 @@
         const millY3 = assessY3 / 1000;
         const millY4 = assessY4 / 1000;
 
-        // Multiply by council rates (and apply budget increase for FY 2028 & FY 2029)
+        // Multiply by council rate (no district mill)
         const taxY0 = millY0 * councilY0;
         const taxY1 = millY1 * councilY1;
         const taxY2 = millY2 * councilY2;
