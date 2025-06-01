@@ -30,6 +30,11 @@
       If you leave both blank, we can’t produce an accurate phase-in comparison.
     </p>
 
+    <p class="mb-6 text-gray-700 leading-relaxed">
+      This calculator uses the FY 2026 approved mill rate as its baseline and
+      assumes roughly a 3% mill rate growth in each subsequent year.
+    </p>
+
     <!--────────────────────────────────────
       Simple Input Section (always visible)
     ────────────────────────────────────-->
@@ -424,23 +429,23 @@
         <div class="text-lg font-semibold mb-2">Estimated Annual Taxes</div>
         <div class="grid grid-cols-1 gap-2">
           <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2025</span>
+            <span class="font-medium text-gray-800">FY 2025 (billed in 2024)</span>
             <span class="text-gray-700">$${formatCurrency(taxY0)}</span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2026</span>
+            <span class="font-medium text-gray-800">FY 2026 (billed in 2025)</span>
             <span class="text-gray-700">$${formatCurrency(taxY1)}</span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2027</span>
+            <span class="font-medium text-gray-800">FY 2027 (billed in 2026)</span>
             <span class="text-gray-700">$${formatCurrency(taxY2)}</span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2028</span>
+            <span class="font-medium text-gray-800">FY 2028 (billed in 2027)</span>
             <span class="text-gray-700">$${formatCurrency(taxY3)}</span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2029</span>
+            <span class="font-medium text-gray-800">FY 2029 (billed in 2028)</span>
             <span class="text-gray-700">$${formatCurrency(taxY4)}</span>
           </div>
         </div>
