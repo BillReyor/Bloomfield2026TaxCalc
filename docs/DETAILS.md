@@ -17,7 +17,8 @@ const defaultRates = {
   futureIncrease: 0.03
 };
 ```
-*(see `index.html` lines 370&ndash;383).* 
+*(see `index.html` lines 382&ndash;395).*  These defaults are defined in the
+embedded script near the bottom of `index.html`.
 
 ## Inputs
 
@@ -45,3 +46,28 @@ const assessY4 = postVal;
 5. **Render Output** – the page displays estimated taxes for FY 2025–FY 2029 along with year-over-year changes.
 
 These calculations provide estimates only and may not match your exact bill.
+
+## Helper Functions
+
+Several small helper functions keep the user interface responsive
+(all defined around lines 398&ndash;499 of `index.html`):
+
+- `validateInput()` &ndash; enables or disables the **Calculate** button when the
+  post&ndash;revaluation value is invalid.
+- `formatCurrency(num)` &ndash; formats numbers as US dollars with comma
+  separators and two decimal places.
+- `renderWarning()` &ndash; displays a warning message if neither an old value nor
+  a revaluation percentage is provided.
+- `renderWithDiff(taxY0, taxY1, taxY2, taxY3, taxY4)` &ndash; renders the results
+  table and calculates year&ndash;over&ndash;year changes.
+
+## Event Handlers
+
+Several elements have associated event listeners:
+
+- **Advanced Configuration Toggle** – clicking the element with ID
+  `toggleAdvanced` shows or hides the advanced section and updates ARIA
+  attributes (lines 406&ndash;417).
+- **Calculate Button** – the main calculation logic runs when `calculateBtn`
+  is clicked (lines 503&ndash;578), reading inputs, computing taxes and
+  rendering results.
