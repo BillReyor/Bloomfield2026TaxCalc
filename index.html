@@ -6,9 +6,9 @@
     name="viewport" 
     content="width=device-width, initial-scale=1.0" 
   />
-  <meta 
-    name="description" 
-    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (correct 4-year phase-in with equalized-to-council switch)" 
+  <meta
+    name="description"
+    content="Bloomfield real estate tax calculator for FY 2025–FY 2029 (four-year phase-in with equalized mill baseline)"
   />
   <meta name="author" content="Created by William Reyor" />
   <title>Bloomfield Tax Calculator</title>
@@ -212,8 +212,8 @@
       <div>
         <h3 class="text-lg font-semibold mb-2">Equalized Mill Rates</h3>
         <p class="mb-4 text-sm text-gray-500">
-          Shows what the rate would be if assessments reflected full market value (CT uses 70%).  
-          For years FY 2025–FY 2027, we use these “equalized” rates. Starting in FY 2028, we switch to the council mill.
+          Shows the revenue-neutral rate for each phase-in level as if all properties were already assessed at that percentage of market value (Connecticut uses 70%).
+          Add the Town Council’s budget increase to these equalized rates to arrive at the actual mill rate each year.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -552,8 +552,9 @@
       const millY4 = assessY4 / 1000;
 
       // 3) Tax calculation:
-      //    • FY 2025–FY 2027 (indices 0–2): use equalized mill
-      //    • FY 2028–FY 2029 (indices 3–4): switch to council mill, then apply budget increase for FY 2028 & FY 2029
+      //    Each year begins with the equalized mill rate for that phase-in
+      //    level. After applying the Town Council’s budget increase, that
+      //    becomes the actual mill rate used for taxes.
       function taxForYear(millUnits, yearIdx) {
         if (yearIdx === 0) {
           // FY 2025: equalizedY0
