@@ -16,7 +16,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-900">
-  <div class="max-w-3xl mx-auto py-8 px-4">
+  <div class="max-w-3xl mx-auto py-8 px-4 pb-24"
     <!-- Title -->
     <h1 class="text-3xl font-bold text-center mb-6">
       Bloomfield Tax Calculator (FY 2025–FY 2029)
@@ -408,51 +408,76 @@
 
       resultsEl.innerHTML = `
         <div class="text-lg font-semibold mb-2">Estimated Annual Taxes</div>
-        <div class="grid grid-cols-1 gap-2">
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2025 (billed in 2024)</span>
-            <span class="text-gray-700">$${formatCurrency(taxY0)}</span>
+        <div class="grid grid-cols-1 gap-2 text-sm">
+          <div class="grid grid-cols-3 border-b py-1">
+            <div class="font-medium text-gray-800">
+              GL 2023<br /><span class="text-gray-500">(billed in 2024)</span>
+            </div>
+            <div class="text-right text-gray-700">
+              ${councilY0.toFixed(2)} mills<br /><span class="text-gray-500">actual</span>
+            </div>
+            <div class="text-right text-gray-700">$${formatCurrency(taxY0)}</div>
           </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2026 (billed in 2025)</span>
-            <span class="text-gray-700">$${formatCurrency(taxY1)}</span>
+          <div class="grid grid-cols-3 border-b py-1">
+            <div class="font-medium text-gray-800">
+              GL 2024<br /><span class="text-gray-500">(billed in 2025)</span>
+            </div>
+            <div class="text-right text-gray-700">
+              ${councilY1.toFixed(2)} mills<br /><span class="text-gray-500">actual</span>
+            </div>
+            <div class="text-right text-gray-700">$${formatCurrency(taxY1)}</div>
           </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2027 (billed in 2026)</span>
-            <span class="text-gray-700">$${formatCurrency(taxY2)}</span>
+          <div class="grid grid-cols-3 border-b py-1">
+            <div class="font-medium text-gray-800">
+              GL 2025<br /><span class="text-gray-500">(billed in 2026)</span>
+            </div>
+            <div class="text-right text-gray-700">
+              ${councilY2.toFixed(2)} mills<br /><span class="text-gray-500">est.</span>
+            </div>
+            <div class="text-right text-gray-700">$${formatCurrency(taxY2)}</div>
           </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2028 (billed in 2027)</span>
-            <span class="text-gray-700">$${formatCurrency(taxY3)}</span>
+          <div class="grid grid-cols-3 border-b py-1">
+            <div class="font-medium text-gray-800">
+              GL 2026<br /><span class="text-gray-500">(billed in 2027)</span>
+            </div>
+            <div class="text-right text-gray-700">
+              ${councilY3.toFixed(2)} mills<br /><span class="text-gray-500">est.</span>
+            </div>
+            <div class="text-right text-gray-700">$${formatCurrency(taxY3)}</div>
           </div>
-          <div class="flex justify-between border-b py-1">
-            <span class="font-medium text-gray-800">FY 2029 (billed in 2028)</span>
-            <span class="text-gray-700">$${formatCurrency(taxY4)}</span>
+          <div class="grid grid-cols-3 border-b py-1">
+            <div class="font-medium text-gray-800">
+              GL 2027<br /><span class="text-gray-500">(billed in 2028)</span>
+            </div>
+            <div class="text-right text-gray-700">
+              ${councilY4.toFixed(2)} mills<br /><span class="text-gray-500">est.</span>
+            </div>
+            <div class="text-right text-gray-700">$${formatCurrency(taxY4)}</div>
           </div>
         </div>
 
         <div class="mt-6 text-lg font-semibold mb-2">Year-Over-Year Changes</div>
         <div class="grid grid-cols-1 gap-2">
           <div class="flex justify-between border-b py-1">
-            <span class="text-gray-800">FY 2026 vs FY 2025</span>
+            <span class="text-gray-800">GL 2024 vs GL 2023</span>
             <span class="text-gray-700">
               $${formatCurrency(diffY1)} (${pctY1.toFixed(1)}%)
             </span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="text-gray-800">FY 2027 vs FY 2026</span>
+            <span class="text-gray-800">GL 2025 vs GL 2024</span>
             <span class="text-gray-700">
               $${formatCurrency(diffY2)} (${pctY2.toFixed(1)}%)
             </span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="text-gray-800">FY 2028 vs FY 2027</span>
+            <span class="text-gray-800">GL 2026 vs GL 2025</span>
             <span class="text-gray-700">
               $${formatCurrency(diffY3)} (${pctY3.toFixed(1)}%)
             </span>
           </div>
           <div class="flex justify-between border-b py-1">
-            <span class="text-gray-800">FY 2029 vs FY 2028</span>
+            <span class="text-gray-800">GL 2027 vs GL 2026</span>
             <span class="text-gray-700">
               $${formatCurrency(diffY4)} (${pctY4.toFixed(1)}%)
             </span>
