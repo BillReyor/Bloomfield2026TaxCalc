@@ -10,19 +10,15 @@
     name="description"
     content="Bloomfield real estate tax calculator for GL 2023–GL 2027 (correct 4-year phase-in with council mill baseline)"
   />
-  <meta name="author" content="Created by William Reyor" />
   <title>Bloomfield Tax Calculator</title>
-  <!-- Tailwind CSS (via CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-900">
   <div class="max-w-3xl mx-auto py-8 px-4 pb-24">
-    <!-- Title -->
     <h1 class="text-3xl font-bold text-center mb-6">
       Bloomfield Tax Calculator (GL 2023–GL 2027)
     </h1>
 
-    <!-- Intro Paragraph -->
     <p class="mb-6 text-gray-700 leading-relaxed">
       Enter your property’s <strong>post-revaluation assessed value</strong> (the 70% CT assessed figure, effective GL 2024), 
       along with <strong>either</strong> your <strong>old (pre-reval) assessed value</strong> 
@@ -34,14 +30,9 @@
       This calculator uses the GL 2024 approved mill rate as its baseline and
       assumes roughly a 3% mill rate growth in each subsequent year.
     </p>
-
-    <!--────────────────────────────────────
-      Simple Input Section (always visible)
-    ────────────────────────────────────-->
     <div class="bg-white shadow-md rounded-lg p-6 mb-6 space-y-6">
       <h2 class="text-xl font-semibold mb-4 border-b pb-2">Assessed Values</h2>
 
-      <!-- Current (Post-Reval) Assessed Value -->
       <div>
         <label for="assessedPost" class="block font-medium mb-1">
           Full Post-Revaluation Assessed Value (100%)
@@ -60,7 +51,6 @@
         </p>
       </div>
 
-      <!-- Old (Pre-Reval) Assessed Value -->
       <div>
         <label for="assessedPre" class="block font-medium mb-1">
           Old (Pre-Revaluation) Assessed Value
@@ -80,7 +70,6 @@
 
       <p class="text-center text-gray-600 italic">― or ―</p>
 
-      <!-- Revaluation Increase Percentage -->
       <div>
         <label for="revalPct" class="block font-medium mb-1">
           Revaluation Increase (%)
@@ -100,10 +89,6 @@
         </p>
       </div>
     </div>
-
-    <!--────────────────────────────────────
-      Advanced Configuration Toggle
-    ────────────────────────────────────-->
     <button
       id="toggleAdvanced"
       aria-expanded="false"
@@ -112,10 +97,6 @@
     >
       Advanced Configuration ▼
     </button>
-
-    <!--────────────────────────────────────
-      Advanced Configuration (hidden by default)
-    ────────────────────────────────────-->
     <div
       id="advancedConfig"
       class="hidden transition-all duration-200 bg-white shadow-md rounded-lg p-6 mb-6 space-y-6"
@@ -124,7 +105,6 @@
         Advanced Rates & Options
       </h2>
 
-      <!-- Council Mill Rates (GL 2023–GL 2027) -->
       <div>
         <h3 class="text-lg font-semibold mb-2">Council Mill Rates</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -218,7 +198,6 @@
 
       <hr />
 
-      <!-- Equalized Mill Rates (GL 2024–GL 2027) -->
       <div>
         <h3 class="text-lg font-semibold mb-2">Equalized Mill Rates</h3>
         <p class="mb-4 text-sm text-gray-500">
@@ -298,10 +277,6 @@
         </div>
       </div>
     </div>
-
-    <!--────────────────────────────────────
-      Calculate Button
-    ────────────────────────────────────-->
     <button
       id="calculateBtn"
       class="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700 transition mb-8"
@@ -309,20 +284,14 @@
     >
       Calculate My Taxes
     </button>
-
-    <!--────────────────────────────────────
-      Results Section
-    ────────────────────────────────────-->
     <div id="results" class="bg-white shadow-md rounded-lg p-6 space-y-4"></div>
 
-    <!-- Version Tag -->
     <div class="mt-4 text-center text-gray-500 text-xs">
       Version 1.6
     </div>
   </div>
 
   <script>
-    // Cache DOM references
     const assessedPostInput         = document.getElementById('assessedPost');
     const assessedPreInput          = document.getElementById('assessedPre');
     const revalPctInput             = document.getElementById('revalPct');
@@ -340,29 +309,25 @@
     const calculateBtn              = document.getElementById('calculateBtn');
     const resultsEl                 = document.getElementById('results');
 
-    // Default mill rates for GL 2023–GL 2027.
-    // Council rates drive the calculations; equalized rates are informational.
     const defaultRates = {
-      councilY0:      37.49,   // GL 2023
-      councilY1:      35.64,   // GL 2024
-      councilY2:      34.15,   // GL 2025
-      councilY3:      32.88,   // GL 2026
-      councilY4:      31.79,   // GL 2027
-      equalizedY1:    34.27,   // purely informational
-      equalizedY2:    31.88,   // purely informational
-      equalizedY3:    29.80,   // purely informational
-      equalizedY4:    27.97    // purely informational
+      councilY0:      37.49,  
+      councilY1:      35.64,  
+      councilY2:      34.15,  
+      councilY3:      32.88,  
+      councilY4:      31.79,  
+      equalizedY1:    34.27,  
+      equalizedY2:    31.88,  
+      equalizedY3:    29.80,  
+      equalizedY4:    27.97   
     };
 
-    // 1) Enable/disable “Calculate” button based on valid post-reval input
     function validateInput() {
       const val = parseFloat(assessedPostInput.value);
       calculateBtn.disabled = isNaN(val) || val <= 0;
     }
     assessedPostInput.addEventListener('input', validateInput);
-    validateInput(); // initial check on page load
+    validateInput();
 
-    // 2) Toggle advanced configuration visibility (and ARIA attributes)
     toggleAdvancedBtn.addEventListener('click', () => {
       const isHidden = advancedConfigDiv.classList.contains('hidden');
       if (isHidden) {
@@ -376,7 +341,6 @@
       }
     });
 
-    // 3) Helper: format currency with commas and two decimals
     function formatCurrency(num) {
       return Number(num.toFixed(2)).toLocaleString('en-US', {
         minimumFractionDigits: 2,
@@ -384,7 +348,6 @@
       });
     }
 
-    // 4) Helper: render a warning if neither oldVal nor revalPct is provided
     function renderWarning() {
       resultsEl.innerHTML = `
         <div class="text-red-600 font-semibold">
@@ -395,7 +358,6 @@
       `;
     }
 
-    // 5) Helper: render the final results table (with year-over-year changes)
     function renderWithDiff(taxY0, taxY1, taxY2, taxY3, taxY4, rates) {
       const {
         councilY0,
@@ -493,9 +455,7 @@
       `;
     }
 
-    // 6) Main calculation logic
     calculateBtn.addEventListener('click', () => {
-      // Read the full post-reval value
       const postVal = parseFloat(assessedPostInput.value) || 0;
 
       let {
@@ -515,7 +475,6 @@
         equalizedY4    = parseFloat(equalizedY4Input.value) || equalizedY4;
       }
 
-      // Determine oldVal from “Old (Pre-Reval)” or “Reval %”
       let oldVal = NaN;
       const preVal   = parseFloat(assessedPreInput.value) || NaN;
       const revalPct = parseFloat(revalPctInput.value) || NaN;
@@ -526,18 +485,11 @@
         oldVal = postVal / (1 + revalPct);
       }
 
-      // If we don’t have a valid oldVal, show a warning and exit
       if (isNaN(oldVal) || oldVal <= 0) {
         renderWarning();
         return;
       }
 
-      // Compute the five “phased-in” assessed values:
-      //  • GL 2023 = oldVal
-      //  • GL 2024 = oldVal + 25%×(postVal−oldVal)
-      //  • GL 2025 = oldVal + 50%×(postVal−oldVal)
-      //  • GL 2026 = oldVal + 75%×(postVal−oldVal)
-      //  • GL 2027 = postVal
       const diff     = postVal - oldVal;
       const assessY0 = oldVal;
       const assessY1 = oldVal + 0.25 * diff;
@@ -545,21 +497,18 @@
       const assessY3 = oldVal + 0.75 * diff;
       const assessY4 = postVal;
 
-      // Convert each to “mills” (÷ 1000)
       const millY0 = assessY0 / 1000;
       const millY1 = assessY1 / 1000;
       const millY2 = assessY2 / 1000;
       const millY3 = assessY3 / 1000;
       const millY4 = assessY4 / 1000;
 
-      // Tax = millUnits × councilRate for that year
-      const taxY0 = millY0 * councilY0; // GL 2023
-      const taxY1 = millY1 * councilY1; // GL 2024
-      const taxY2 = millY2 * councilY2; // GL 2025
-      const taxY3 = millY3 * councilY3; // GL 2026
-      const taxY4 = millY4 * councilY4; // GL 2027
+      const taxY0 = millY0 * councilY0;
+      const taxY1 = millY1 * councilY1;
+      const taxY2 = millY2 * councilY2;
+      const taxY3 = millY3 * councilY3;
+      const taxY4 = millY4 * councilY4;
 
-      // Render everything with year-over-year comparisons
       renderWithDiff(taxY0, taxY1, taxY2, taxY3, taxY4, {
         councilY0,
         councilY1,
