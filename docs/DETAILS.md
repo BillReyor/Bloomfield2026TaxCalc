@@ -7,15 +7,15 @@ figures actually used to compute taxes.
 
 ```javascript
 const defaultRates = {
-  councilY0: 37.49, // GL 2023
-  councilY1: 35.64, // GL 2024
-  councilY2: 34.15, // GL 2025
-  councilY3: 32.88, // GL 2026
-  councilY4: 31.79, // GL 2027
-  equalizedY1: 34.27, // informational
-  equalizedY2: 31.88, // informational
-  equalizedY3: 29.80, // informational
-  equalizedY4: 27.97  // informational
+  councilY0: 37.49,
+  councilY1: 35.64,
+  councilY2: 34.15,
+  councilY3: 32.88,
+  councilY4: 31.79,
+  equalizedY1: 34.27,
+  equalizedY2: 31.88,
+  equalizedY3: 29.80,
+  equalizedY4: 27.97 
 };
 ```
 
