@@ -44,7 +44,7 @@ const assessY4 = postVal;
 
 3. **Determine Mill Rates** – the equalized rates show what the mill rate would be if revenue stayed flat at each phase-in level. The calculator uses the council's adopted rates to compute your taxes.
 4. **Compute Annual Taxes** – each phased assessment is divided by 1000 and multiplied by the appropriate mill rate.
-5. **Render Output** – the page displays estimated taxes for FY 2025–FY 2029 along with year-over-year changes.
+5. **Render Output** – the page displays estimated taxes for GL 2023–GL 2027 along with year-over-year changes.
 
 These calculations provide estimates only and may not match your exact bill.
 
