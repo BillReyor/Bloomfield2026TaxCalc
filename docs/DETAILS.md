@@ -7,11 +7,11 @@ figures actually used to compute taxes.
 
 ```javascript
 const defaultRates = {
-  councilY0: 37.49, // FY 2025
-  councilY1: 35.64, // FY 2026
-  councilY2: 34.15, // FY 2027
-  councilY3: 32.88, // FY 2028
-  councilY4: 31.79, // FY 2029
+  councilY0: 37.49, // GL 2023
+  councilY1: 35.64, // GL 2024
+  councilY2: 34.15, // GL 2025
+  councilY3: 32.88, // GL 2026
+  councilY4: 31.79, // GL 2027
   equalizedY1: 34.27, // informational
   equalizedY2: 31.88, // informational
   equalizedY3: 29.80, // informational
@@ -26,8 +26,8 @@ These defaults are defined in the embedded script near the bottom of `index.html
 - **Current Assessed Value** – post-revaluation assessment.
 - **Old Assessed Value** – previous assessment before October 2024 (optional).
 - **Revaluation Increase (%)** – percent increase used to infer your old value (optional).
-- **Council Mill Rates** – FY 2025–2029 rates; overridable in Advanced Configuration.
-- **Equalized Rates** – revenue-neutral rates for FY 2026–2029 (four phases of the revaluation).
+- **Council Mill Rates** – GL 2023–GL 2027 rates; overridable in Advanced Configuration.
+- **Equalized Rates** – revenue-neutral rates for GL 2024–GL 2027 (four phases of the revaluation).
 
 ## Calculation Steps
 
